@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
+
 exports[`enzyme.mount 1`] = `
 .css-1otybxc,
 [data-css-1otybxc] {
