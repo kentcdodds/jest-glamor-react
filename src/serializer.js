@@ -1,18 +1,19 @@
 const css = require('css')
 const {styleSheet} = require('glamor')
 
-const getClassNames = (node, classNames) => {
+const getClassNames = node => {
+  let classNames = []
   if (node.children && node.children.reduce) {
     classNames = node.children.reduce(
-      (acc, child) => acc.concat(getClassNames(child, acc)),
-      classNames,
+      (acc, child) => acc.concat(getClassNames(child)),
+      [],
     )
   }
   const className = node.props && (node.props.className || node.props.class)
   if (className) {
     return classNames.concat(className.toString().split(' '))
   }
-  return []
+  return classNames
 }
 
 const getStyles = classNames => {
@@ -36,7 +37,7 @@ const serializer = {
   },
 
   print(val, print) {
-    const classNames = getClassNames(val, [])
+    const classNames = getClassNames(val)
     const styles = getStyles(classNames)
     val.withStyles = true
     const printedVal = print(val)

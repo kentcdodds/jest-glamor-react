@@ -1,6 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`enzyme.mount 1`] = `
+.css-1otybxc,
+[data-css-1otybxc] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.css-1tnuino,
+[data-css-1tnuino] {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
 <Wrapper>
   <section
     className="css-1otybxc"
@@ -80,4 +93,18 @@ exports[`react-test-renderer 1`] = `
     Hello World, this is my first glamor styled component!
   </h1>
 </section>
+`;
+
+exports[`works when the root element does not have styles 1`] = `
+.css-1otybxc,
+[data-css-1otybxc] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<div>
+  <section
+    className="css-1otybxc"
+  />
+</div>
 `;

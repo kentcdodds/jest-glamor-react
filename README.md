@@ -26,7 +26,7 @@ If you use [`glamor`][glamor] as your CSS-in-JS solution, and you use
 [snapshot testing][snapshot] with [jest][jest] then you probably have some test
 snapshots that look like:
 
-```
+```html
 <h1
   class="css-1tnuino"
 >
@@ -40,13 +40,38 @@ through the code to know _what_ caused the class name to change.
 
 ## This solution
 
+This allows your snapshots to look more like:
+
+```html
+.css-1tnuino,
+[data-css-1tnuino] {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<h1
+  class="css-1tnuino"
+>
+  Hello World
+</h1>
+```
+
+This is much more helpful because now you can see the CSS applied and over time
+it becomes even more helpful to see how that changes over time.
+
 This builds on the work from [@MicheleBertoli][MicheleBertoli] in
 [`jest-styled-components`][jest-styled-components] to bring a similar experience
 to React projects that use [`glamor`][glamor].
 
 ### Preview
 
-<img src="https://github.com/kentcdodds/jest-glamor-react/raw/master/other/screenshot.png" alt="Terminal Screenshot" title="Terminal Screenshot" width="500px" />
+<img
+  src="https://github.com/kentcdodds/jest-glamor-react/raw/master/other/screenshot.png"
+  alt="Terminal Screenshot"
+  title="Terminal Screenshot"
+  width="500px"
+/>
 
 ## Installation
 
@@ -134,8 +159,8 @@ test('enzyme', () => {
 
 As mentioned earlier, [@MicheleBertoli][MicheleBertoli]'s
 [`jest-styled-components`][jest-styled-components] was a huge inspiration for
-this project. And much of the code was used from his MIT Licensed project.
-Thank you so much Michele! 👏
+this project. And much of the original code came from from that MIT Licensed
+project. Thank you so much Michele! 👏
 
 ## Other Solutions
 

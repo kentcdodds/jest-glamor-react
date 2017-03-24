@@ -50,3 +50,21 @@ test('enzyme', () => {
     expect(toJson(tree)).toMatchSnapshotWithGlamor(`enzyme.${method}`)
   })
 })
+
+test('works when the root element does not have styles', () => {
+  const tree = renderer
+    .create(
+      <div>
+        <Wrapper />
+      </div>,
+    )
+    .toJSON()
+
+  expect(tree).toMatchSnapshotWithGlamor()
+})
+
+test(`doesn't mess up stuff that does't have styles`, () => {
+  const tree = renderer.create(<div />).toJSON()
+
+  expect(tree).toMatchSnapshotWithGlamor()
+})
