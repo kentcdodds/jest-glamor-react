@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`enzyme.mount 1`] = `
+<Wrapper>
+  <section
+    className="css-1otybxc"
+  >
+    <Title>
+      <h1
+        className="css-1tnuino"
+      >
+        Hello World, this is my first glamor styled component!
+      </h1>
+    </Title>
+  </section>
+</Wrapper>
+`;
+
+exports[`enzyme.render 1`] = `
+.css-1otybxc,
+[data-css-1otybxc] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.css-1tnuino,
+[data-css-1tnuino] {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<section
+  class="css-1otybxc"
+>
+  <h1
+    class="css-1tnuino"
+  >
+    Hello World, this is my first glamor styled component!
+  </h1>
+</section>
+`;
+
+exports[`enzyme.shallow 1`] = `
+.css-1otybxc,
+[data-css-1otybxc] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<section
+  className="css-1otybxc"
+>
+  <Title>
+    Hello World, this is my first glamor styled component!
+  </Title>
+</section>
+`;
+
+exports[`react-test-renderer 1`] = `
+.css-1otybxc,
+[data-css-1otybxc] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.css-1tnuino,
+[data-css-1tnuino] {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<section
+  className="css-1otybxc"
+>
+  <h1
+    className="css-1tnuino"
+  >
+    Hello World, this is my first glamor styled component!
+  </h1>
+</section>
+`;

@@ -1,0 +1,34 @@
+{
+  "projectName": "jest-glamor-react",
+  "projectOwner": "kentcdodds",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "MicheleBertoli",
+      "name": "Michele Bertoli",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1308971?v=3",
+      "profile": "http://michele.berto.li",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "kentcdodds",
+      "name": "Kent C. Dodds",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1500684?v=3",
+      "profile": "https://kentcdodds.com",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "test"
+      ]
+    }
+  ]
+}
