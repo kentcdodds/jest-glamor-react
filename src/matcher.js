@@ -25,12 +25,12 @@ const colorize = message =>
         return chalk.white(line)
       }
       if (isAddition(line)) {
-        return chalk.green(line)
-      }
-      if (isDeletion(line)) {
         return chalk.red(line)
       }
-      return chalk.gray(line)
+      if (isDeletion(line)) {
+        return chalk.green(line)
+      }
+      return chalk.dim(line)
     })
     .join('\n')
 
