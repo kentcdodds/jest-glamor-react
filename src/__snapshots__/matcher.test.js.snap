@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`formats a message 1`] = `
-"[32m- Expected[39m
+"[32m- Snapshot[39m
 [31m+ Received[39m
 
 [2m  [22m
