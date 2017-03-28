@@ -7,7 +7,7 @@ const isAddition = line => /^\+/.test(line)
 
 const isDeletion = line => /^-/.test(line)
 
-const isClassNameAttribute = line => /className="css-.*"/.test(line)
+const isClassNameAttribute = line => /class(Name)?="css-.*"/.test(line)
 const isDataAttribute = line => /data-css-.*/.test(line)
 const isClassNameSelector = line => /\.css-.*,/.test(line)
 const isDataSelector = line => /\[data-css-.*\] {/.test(line)
