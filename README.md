@@ -87,7 +87,7 @@ npm install --save-dev jest-glamor-react
 At the top of your test file:
 
 ```javascript
-import {matcher, serializer} from '../src'
+import {matcher, serializer} from 'jest-glamor-react'
 
 expect.addSnapshotSerializer(serializer)
 expect.extend(matcher)
