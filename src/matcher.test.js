@@ -68,3 +68,36 @@ test('formats a message', () => {
   expect(result.pass).toBe(false)
   expect(result.message).toMatchSnapshot()
 })
+
+test('formats a message with data- attributes', () => {
+  const expected = `
+    .css-12gg9yz,
+    [data-css-12gg9yz] {
+      background-color: rebeccapurple;
+      margin: 2px;
+    }
+
+    <div
+      data-css-12gg9yz=""
+    />
+  `
+
+  const actual = `
+    .css-1rdlmfe,
+    [data-css-1rdlmfe] {
+      background-color: rebeccapurples;
+      margin: 2px;
+    }
+
+    <div
+      data-css-1rdlmfe=""
+    />
+  `
+  toMatchSnapshot.mockImplementation(() => ({pass: false, expected, actual}))
+  const mockRecieved1 = Symbol('mock-received1')
+  const mockRecieved2 = Symbol('mock-received2')
+  const result = toMatchSnapshotWithGlamor(mockRecieved1, mockRecieved2)
+  expect(toMatchSnapshot).toHaveBeenCalledWith(mockRecieved1, mockRecieved2)
+  expect(result.pass).toBe(false)
+  expect(result.message).toMatchSnapshot()
+})

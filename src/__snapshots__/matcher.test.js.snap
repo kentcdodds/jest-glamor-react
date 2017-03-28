@@ -37,3 +37,24 @@ exports[`formats a message 1`] = `
 [2m      </section>[22m
 [2m    [22m"
 `;
+
+exports[`formats a message with data- attributes 1`] = `
+"[32m- Snapshot[39m
+[31m+ Received[39m
+
+[2m  [22m
+[37m-     .css-12gg9yz,[39m
+[37m-     [data-css-12gg9yz] {[39m
+[32m-       background-color: rebeccapurple;[39m
+[37m+     .css-1rdlmfe,[39m
+[37m+     [data-css-1rdlmfe] {[39m
+[31m+       background-color: rebeccapurples;[39m
+[2m        margin: 2px;[22m
+[2m      }[22m
+[2m  [22m
+[2m      <div[22m
+[37m-       data-css-12gg9yz=\\"\\"[39m
+[37m+       data-css-1rdlmfe=\\"\\"[39m
+[2m      />[22m
+[2m    [22m"
+`;

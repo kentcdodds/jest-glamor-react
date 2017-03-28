@@ -1,52 +1,72 @@
 const css = require('css')
 const {styleSheet} = require('glamor')
 
-const getClassNames = node => {
-  let classNames = []
+const serializer = {test, print}
+
+module.exports = serializer
+
+function test(val) {
+  return !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+}
+
+function print(val, printer) {
+  const selectors = getSelectors(val)
+  const styles = getStyles(selectors)
+  val.withStyles = true
+  const printedVal = printer(val)
+  if (styles) {
+    return `${styles}\n\n${printedVal}`
+  } else {
+    return printedVal
+  }
+}
+
+function getSelectors(node) {
+  let selectors = []
   if (node.children && node.children.reduce) {
-    classNames = node.children.reduce(
-      (acc, child) => acc.concat(getClassNames(child)),
+    selectors = node.children.reduce(
+      (acc, child) => acc.concat(getSelectors(child)),
       [],
     )
   }
-  const className = node.props && (node.props.className || node.props.class)
-  if (className) {
-    return classNames.concat(className.toString().split(' '))
+  if (node.props) {
+    return getSelectorsFromProps(selectors, node.props)
   }
-  return classNames
+  return selectors
 }
 
-const getStyles = classNames => {
+function getSelectorsFromProps(selectors, props) {
+  const className = props.className || props.class
+  if (className) {
+    selectors = selectors.concat(
+      className.toString().split(' ').map(cn => `.${cn}`),
+    )
+  }
+  const dataProps = Object.keys(props).reduce(
+    (dProps, key) => {
+      if (key.startsWith('data-')) {
+        dProps.push(`[${key}]`)
+      }
+      return dProps
+    },
+    [],
+  )
+  if (dataProps.length) {
+    selectors = selectors.concat(dataProps)
+  }
+  return selectors
+}
+
+function getStyles(nodeSelectors) {
   const styles = styleSheet.tags
     .map(tag => /* istanbul ignore next */ tag.textContent || '')
     .join('\n')
   const ast = css.parse(styles)
-  ast.stylesheet.rules = ast.stylesheet.rules.filter(
-    rule =>
-      rule.type === 'rule' &&
-      classNames.includes(rule.selectors[0].substring(1)),
-  )
+  ast.stylesheet.rules = ast.stylesheet.rules.filter(rule => {
+    return rule.type === 'rule' &&
+      rule.selectors.some(selector => nodeSelectors.includes(selector))
+  })
 
   const ret = css.stringify(ast)
   return ret
 }
-
-const serializer = {
-  test(val) {
-    return !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
-  },
-
-  print(val, print) {
-    const classNames = getClassNames(val)
-    const styles = getStyles(classNames)
-    val.withStyles = true
-    const printedVal = print(val)
-    if (styles) {
-      return `${styles}\n\n${printedVal}`
-    } else {
-      return printedVal
-    }
-  },
-}
-
-module.exports = serializer

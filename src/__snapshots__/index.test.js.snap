@@ -110,3 +110,15 @@ exports[`works when the root element does not have styles 1`] = `
   />
 </div>
 `;
+
+exports[`works with data attributes as well 1`] = `
+.css-1rdlmfe,
+[data-css-1rdlmfe] {
+  background-color: rebeccapurples;
+  margin: 2px;
+}
+
+<div
+  data-css-1rdlmfe=""
+/>
+`;

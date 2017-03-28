@@ -68,3 +68,12 @@ test(`doesn't mess up stuff that does't have styles`, () => {
 
   expect(tree).toMatchSnapshotWithGlamor()
 })
+
+test('works with data attributes as well', () => {
+  const styles = glamor.css({
+    backgroundColor: 'rebeccapurples',
+    margin: 2,
+  })
+  const tree = renderer.create(<div {...styles} />)
+  expect(tree).toMatchSnapshotWithGlamor()
+})
