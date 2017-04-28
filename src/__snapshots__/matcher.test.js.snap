@@ -25,12 +25,12 @@ exports[`formats a message 1`] = `
 [2m      }[22m
 [2m  [22m
 [2m      <section[22m
-[37m-       className=\\"css-1otybxc\\"[39m
-[37m+       className=\\"css-i77z7r\\"[39m
+[37m-       className=\\"some-other-class css-1otybxc\\"[39m
+[37m+       className=\\"some-other-class css-i77z7r\\"[39m
 [2m      >[22m
 [2m        <h1[22m
-[37m-         className=\\"css-1tnuino\\"[39m
-[37m+         className=\\"css-1252hns\\"[39m
+[32m-         className=\\"changed-class css-1tnuino\\"[39m
+[31m+         className=\\"class-changed css-1252hns\\"[39m
 [2m        >[22m
 [2m          Hello World, this is my first glamor styled component![22m
 [2m        </h1>[22m

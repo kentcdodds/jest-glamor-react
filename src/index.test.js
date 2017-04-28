@@ -69,11 +69,48 @@ test(`doesn't mess up stuff that does't have styles`, () => {
   expect(tree).toMatchSnapshotWithGlamor()
 })
 
-test('works with data attributes as well', () => {
-  const styles = glamor.css({
-    backgroundColor: 'rebeccapurples',
-    margin: 2,
+const generalTests = [
+  {
+    title: 'data attributes',
+    styles: {
+      backgroundColor: 'rebeccapurple',
+      margin: 2,
+    },
+  },
+  {
+    title: 'media queries',
+    styles: {
+      fontSize: 24,
+      margin: 12,
+      '@media (max-width: 641px)': {
+        fontSize: 20,
+        margin: 10,
+      },
+    },
+  },
+  {
+    title: 'pseudo elements',
+    styles: {
+      '& button': {
+        color: 'green',
+      },
+    },
+  },
+  {
+    title: 'pseudo states',
+    styles: {
+      ':hover': {
+        backgroundColor: 'blue',
+      },
+    },
+  },
+]
+
+generalTests.forEach(({title, styles}, index) => {
+  test(title, () => {
+    const tree = renderer.create(<div {...glamor.css(styles)} />)
+    expect(tree).toMatchSnapshotWithGlamor(
+      `${index + 1}. general tests: ${title} - ${JSON.stringify(styles)}`,
+    )
   })
-  const tree = renderer.create(<div {...styles} />)
-  expect(tree).toMatchSnapshotWithGlamor()
 })

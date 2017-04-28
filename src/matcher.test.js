@@ -27,10 +27,10 @@ test('formats a message', () => {
     }
 
     <section
-      className="css-1otybxc"
+      className="some-other-class css-1otybxc"
     >
       <h1
-        className="css-1tnuino"
+        className="changed-class css-1tnuino"
       >
         Hello World, this is my first glamor styled component!
       </h1>
@@ -51,10 +51,10 @@ test('formats a message', () => {
     }
 
     <section
-      className="css-i77z7r"
+      className="some-other-class css-i77z7r"
     >
       <h1
-        className="css-1252hns"
+        className="class-changed css-1252hns"
       >
         Hello World, this is my first glamor styled component!
       </h1>

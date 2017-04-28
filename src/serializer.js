@@ -62,11 +62,36 @@ function getStyles(nodeSelectors) {
     .map(tag => /* istanbul ignore next */ tag.textContent || '')
     .join('\n')
   const ast = css.parse(styles)
-  ast.stylesheet.rules = ast.stylesheet.rules.filter(rule => {
-    return rule.type === 'rule' &&
-      rule.selectors.some(selector => nodeSelectors.includes(selector))
-  })
+  const rules = ast.stylesheet.rules.filter(filter)
+  const mediaQueries = getMediaQueries(ast, filter)
+
+  ast.stylesheet.rules = [...rules, ...mediaQueries]
 
   const ret = css.stringify(ast)
   return ret
+
+  function filter(rule) {
+    if (rule.type === 'rule') {
+      return rule.selectors.some(selector => {
+        const baseSelector = selector.split(/:| /)[0]
+        return nodeSelectors.includes(baseSelector)
+      })
+    }
+    return false
+  }
+}
+
+function getMediaQueries(ast, filter) {
+  return ast.stylesheet.rules.filter(rule => rule.type === 'media').reduce((
+    acc,
+    mediaQuery,
+  ) => {
+    mediaQuery.rules = mediaQuery.rules.filter(filter)
+
+    if (mediaQuery.rules.length) {
+      return acc.concat(mediaQuery)
+    }
+
+    return acc
+  }, [])
 }
