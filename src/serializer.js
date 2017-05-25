@@ -6,7 +6,8 @@ const serializer = {test, print}
 module.exports = serializer
 
 function test(val) {
-  return !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+  return val && !val.withStyles &&
+    val.$$typeof === Symbol.for('react.test.json')
 }
 
 function print(val, printer) {
