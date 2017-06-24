@@ -33,6 +33,7 @@
     "babel-register": "^6.23.0",
     "codecov": "^2.1.0",
     "commitizen": "^2.9.6",
+    "cxs": "^3.0.4",
     "cz-conventional-changelog": "^2.0.0",
     "enzyme": "^2.7.1",
     "enzyme-to-json": "^1.5.0",
