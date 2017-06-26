@@ -1649,6 +1649,12 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+cxs@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/cxs/-/cxs-3.0.4.tgz#2e1a1537742931a53dbe3157afbf121da62df797"
+  dependencies:
+    glamor "^2.17.14"
+
 cz-conventional-changelog@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/cz-conventional-changelog/-/cz-conventional-changelog-1.2.0.tgz#2bca04964c8919b23f3fd6a89ef5e6008b31b3f8"
@@ -2665,7 +2671,7 @@ github@~0.1.10:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/github/-/github-0.1.16.tgz#895d2a85b0feb7980d89ac0ce4f44dcaa03f17b5"
 
-glamor@^2.20.24:
+glamor@^2.17.14, glamor@^2.20.24:
   version "2.20.24"
   resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.24.tgz#a299af2eec687322634ba38e4a0854d8743d2041"
   dependencies:

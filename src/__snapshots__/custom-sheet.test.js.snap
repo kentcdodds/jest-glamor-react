@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`1. general tests: media queries - {"fontSize":24,"margin":12,"@media (max-width: 641px)":{"fontSize":20,"margin":10}} 1`] = `
+.fs-24 {
+  font-size: 24px;
+}
+
+.m-12 {
+  margin: 12px;
+}
+
+@media (max-width: 641px) {
+  ._9gzisy {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 641px) {
+  ._d2w6i1 {
+    margin: 10px;
+  }
+}
+
+<div
+  className="fs-24 m-12 _9gzisy _d2w6i1"
+/>
+`;
+
+exports[`2. general tests: pseudo elements - {"& button":{"color":"green"}} 1`] = `
+.___button-c-green & button {
+  color: green;
+}
+
+<div
+  className="___button-c-green"
+/>
+`;
+
+exports[`3. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}} 1`] = `
+._hover-bc-blue:hover {
+  background-color: blue;
+}
+
+<div
+  className="_hover-bc-blue"
+/>
+`;
+
+exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
+
+exports[`enzyme.mount 1`] = `
+.p-4em {
+  padding: 4em;
+}
+
+.b-papayawhip {
+  background: papayawhip;
+}
+
+.fs-1p5em {
+  font-size: 1.5em;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.c-palevioletred {
+  color: palevioletred;
+}
+
+<Wrapper>
+  <section
+    className="p-4em b-papayawhip"
+  >
+    <Title>
+      <h1
+        className="fs-1p5em text-align-center c-palevioletred"
+      >
+        Hello World, this is my first glamor styled component!
+      </h1>
+    </Title>
+  </section>
+</Wrapper>
+`;
+
+exports[`enzyme.render 1`] = `
+.p-4em {
+  padding: 4em;
+}
+
+.b-papayawhip {
+  background: papayawhip;
+}
+
+.fs-1p5em {
+  font-size: 1.5em;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.c-palevioletred {
+  color: palevioletred;
+}
+
+<section
+  class="p-4em b-papayawhip"
+>
+  <h1
+    class="fs-1p5em text-align-center c-palevioletred"
+  >
+    Hello World, this is my first glamor styled component!
+  </h1>
+</section>
+`;
+
+exports[`enzyme.shallow 1`] = `
+.p-4em {
+  padding: 4em;
+}
+
+.b-papayawhip {
+  background: papayawhip;
+}
+
+<section
+  className="p-4em b-papayawhip"
+>
+  <Title>
+    Hello World, this is my first glamor styled component!
+  </Title>
+</section>
+`;
+
+exports[`react-test-renderer 1`] = `
+.p-4em {
+  padding: 4em;
+}
+
+.b-papayawhip {
+  background: papayawhip;
+}
+
+.fs-1p5em {
+  font-size: 1.5em;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.c-palevioletred {
+  color: palevioletred;
+}
+
+<section
+  className="p-4em b-papayawhip"
+>
+  <h1
+    className="fs-1p5em text-align-center c-palevioletred"
+  >
+    Hello World, this is my first glamor styled component!
+  </h1>
+</section>
+`;
+
+exports[`works when the root element does not have styles 1`] = `
+.p-4em {
+  padding: 4em;
+}
+
+.b-papayawhip {
+  background: papayawhip;
+}
+
+<div>
+  <section
+    className="p-4em b-papayawhip"
+  />
+</div>
+`;

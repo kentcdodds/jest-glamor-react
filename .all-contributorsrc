@@ -29,6 +29,17 @@
         "infra",
         "test"
       ]
+    },
+    {
+      "login": "mitchellhamilton",
+      "name": "Mitchell Hamilton",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11481355?v=3",
+      "profile": "https://hamil.town",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ]
 }

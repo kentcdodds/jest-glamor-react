@@ -9,7 +9,7 @@ Jest utilities for Glamor and React
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -155,6 +155,43 @@ test('enzyme', () => {
 })
 ```
 
+If you use a library with a similar stylesheet solution to [`glamor`][glamor] like [`cxs`][cxs] you can do this instead:
+
+```javascript
+import {sheet} from 'cxs'
+import {matcher, serializer} from 'jest-glamor-react'
+
+expect.addSnapshotSerializer(serializer(sheet))
+expect.extend(matcher)
+```
+
+Then you can create components like this:
+
+```javascript
+import React from 'react'
+import cxs from 'cxs'
+
+function Wrapper(props) {
+  const className = cxs({
+    padding: '4em',
+    background: 'papayawhip',
+  })
+  return <section className={`${className}`} {...props} />
+}
+
+function Title(props) {
+  const className = cxs({
+    fontSize: '1.5em',
+    textAlign: 'center',
+    color: 'palevioletred',
+  })
+  return <h1 className={`${className}`} {...props} />
+}
+```
+
+And test them the same way as before.
+
+
 ## Inspiration
 
 As mentioned earlier, [@MicheleBertoli][MicheleBertoli]'s
@@ -171,8 +208,8 @@ I'm unaware of other solutions. Please file a PR if you know of any!
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/1308971?v=3" width="100px;"/><br /><sub>Michele Bertoli</sub>](http://michele.berto.li)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) 🚇 [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) |
-| :---: | :---: |
+| [<img src="https://avatars1.githubusercontent.com/u/1308971?v=3" width="100px;"/><br /><sub>Michele Bertoli</sub>](http://michele.berto.li)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli) | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) 🚇 [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds) | [<img src="https://avatars2.githubusercontent.com/u/11481355?v=3" width="100px;"/><br /><sub>Mitchell Hamilton</sub>](https://hamil.town)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton) [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton) [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton) |
+| :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification. Contributions of any kind welcome!
@@ -218,3 +255,4 @@ MIT
 [jest]: http://facebook.github.io/jest/
 [MicheleBertoli]: https://github.com/MicheleBertoli
 [jest-styled-components]: https://github.com/styled-components/jest-styled-components
+[cxs]: https://www.npmjs.com/package/cxs
