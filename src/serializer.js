@@ -3,9 +3,9 @@ const {styleSheet: glamorStyleSheet} = require('glamor')
 
 function createSerializer(styleSheet) {
   function test(val) {
-    return val &&
-      !val.withStyles &&
-      val.$$typeof === Symbol.for('react.test.json')
+    return (
+      val && !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+    )
   }
 
   function print(val, printer) {
@@ -14,10 +14,21 @@ function createSerializer(styleSheet) {
     val.withStyles = true
     const printedVal = printer(val)
     if (styles) {
-      return `${styles}\n\n${printedVal}`
+      return replaceClassNames(selectors, styles, printedVal)
     } else {
       return printedVal
     }
+  }
+
+  function replaceClassNames(selectors, styles, code) {
+    let index = 0
+    return selectors.reduce((acc, className) => {
+      const escapedRegex = new RegExp(
+        className.replace('.', '').replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'),
+        'g',
+      )
+      return acc.replace(escapedRegex, `c${index++}`)
+    }, `${styles}\n\n${code}`)
   }
 
   function getSelectors(node) {
@@ -41,15 +52,12 @@ function createSerializer(styleSheet) {
         className.toString().split(' ').map(cn => `.${cn}`),
       )
     }
-    const dataProps = Object.keys(props).reduce(
-      (dProps, key) => {
-        if (key.startsWith('data-')) {
-          dProps.push(`[${key}]`)
-        }
-        return dProps
-      },
-      [],
-    )
+    const dataProps = Object.keys(props).reduce((dProps, key) => {
+      if (key.startsWith('data-')) {
+        dProps.push(`[${key}]`)
+      }
+      return dProps
+    }, [])
     if (dataProps.length) {
       selectors = selectors.concat(dataProps)
     }
@@ -81,18 +89,17 @@ function createSerializer(styleSheet) {
   }
 
   function getMediaQueries(ast, filter) {
-    return ast.stylesheet.rules.filter(rule => rule.type === 'media').reduce((
-      acc,
-      mediaQuery,
-    ) => {
-      mediaQuery.rules = mediaQuery.rules.filter(filter)
+    return ast.stylesheet.rules
+      .filter(rule => rule.type === 'media')
+      .reduce((acc, mediaQuery) => {
+        mediaQuery.rules = mediaQuery.rules.filter(filter)
 
-      if (mediaQuery.rules.length) {
-        return acc.concat(mediaQuery)
-      }
+        if (mediaQuery.rules.length) {
+          return acc.concat(mediaQuery)
+        }
 
-      return acc
-    }, [])
+        return acc
+      }, [])
   }
   return {test, print}
 }
