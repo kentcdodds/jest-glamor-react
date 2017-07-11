@@ -1,5 +1,6 @@
 const css = require('css')
 const {styleSheet: glamorStyleSheet} = require('glamor')
+const {replaceClassNames} = require('./replace-class-names')
 
 function createSerializer(styleSheet) {
   function test(val) {
@@ -18,17 +19,6 @@ function createSerializer(styleSheet) {
     } else {
       return printedVal
     }
-  }
-
-  function replaceClassNames(selectors, styles, code) {
-    let index = 0
-    return selectors.reduce((acc, className) => {
-      const escapedRegex = new RegExp(
-        className.replace('.', '').replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'),
-        'g',
-      )
-      return acc.replace(escapedRegex, `c${index++}`)
-    }, `${styles}\n\n${code}`)
   }
 
   function getSelectors(node) {
