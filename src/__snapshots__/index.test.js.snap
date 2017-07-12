@@ -57,14 +57,14 @@ exports[`4. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}}
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
 
 exports[`enzyme.mount 1`] = `
-.css-1otybxc,
-[data-css-1otybxc] {
+.glamor-1,
+[data-glamor-1] {
   padding: 4em;
   background: papayawhip;
 }
 
-.css-1tnuino,
-[data-css-1tnuino] {
+.glamor-0,
+[data-glamor-0] {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
@@ -72,11 +72,11 @@ exports[`enzyme.mount 1`] = `
 
 <Wrapper>
   <section
-    className="css-1otybxc"
+    className="glamor-1"
   >
     <Title>
       <h1
-        className="css-1tnuino"
+        className="glamor-0"
       >
         Hello World, this is my first glamor styled component!
       </h1>
@@ -86,24 +86,24 @@ exports[`enzyme.mount 1`] = `
 `;
 
 exports[`enzyme.render 1`] = `
-.css-1otybxc,
-[data-css-1otybxc] {
+.glamor-1,
+[data-glamor-1] {
   padding: 4em;
   background: papayawhip;
 }
 
-.css-1tnuino,
-[data-css-1tnuino] {
+.glamor-0,
+[data-glamor-0] {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
 }
 
 <section
-  class="css-1otybxc"
+  class="glamor-1"
 >
   <h1
-    class="css-1tnuino"
+    class="glamor-0"
   >
     Hello World, this is my first glamor styled component!
   </h1>
@@ -111,14 +111,14 @@ exports[`enzyme.render 1`] = `
 `;
 
 exports[`enzyme.shallow 1`] = `
-.css-1otybxc,
-[data-css-1otybxc] {
+.glamor-0,
+[data-glamor-0] {
   padding: 4em;
   background: papayawhip;
 }
 
 <section
-  className="css-1otybxc"
+  className="glamor-0"
 >
   <Title>
     Hello World, this is my first glamor styled component!
@@ -127,24 +127,24 @@ exports[`enzyme.shallow 1`] = `
 `;
 
 exports[`react-test-renderer 1`] = `
-.css-1otybxc,
-[data-css-1otybxc] {
+.glamor-1,
+[data-glamor-1] {
   padding: 4em;
   background: papayawhip;
 }
 
-.css-1tnuino,
-[data-css-1tnuino] {
+.glamor-0,
+[data-glamor-0] {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
 }
 
 <section
-  className="css-1otybxc"
+  className="glamor-1"
 >
   <h1
-    className="css-1tnuino"
+    className="glamor-0"
   >
     Hello World, this is my first glamor styled component!
   </h1>
@@ -152,15 +152,15 @@ exports[`react-test-renderer 1`] = `
 `;
 
 exports[`works when the root element does not have styles 1`] = `
-.css-1otybxc,
-[data-css-1otybxc] {
+.glamor-0,
+[data-glamor-0] {
   padding: 4em;
   background: papayawhip;
 }
 
 <div>
   <section
-    className="css-1otybxc"
+    className="glamor-0"
   />
 </div>
 `;
