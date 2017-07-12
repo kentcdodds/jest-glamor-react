@@ -47,7 +47,9 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/11878516?v=3",
       "profile": "https://github.com/jhurley23",
       "contributions": [
-        "code"
+        "code",
+        "test",
+        "doc"
       ]
     }
   ]
