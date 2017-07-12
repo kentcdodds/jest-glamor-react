@@ -2,7 +2,7 @@
 
 exports[`1. general tests: data attributes - {"backgroundColor":"rebeccapurple","margin":2} 1`] = `
 .css-12gg9yz,
-glamor-0 {
+[data-css-12gg9yz] {
   background-color: rebeccapurple;
   margin: 2px;
 }
@@ -14,14 +14,14 @@ glamor-0 {
 
 exports[`2. general tests: media queries - {"fontSize":24,"margin":12,"@media (max-width: 641px)":{"fontSize":20,"margin":10}} 1`] = `
 .css-1kjhlaz,
-glamor-0 {
+[data-css-1kjhlaz] {
   font-size: 24px;
   margin: 12px;
 }
 
 @media (max-width: 641px) {
   .css-1kjhlaz,
-  glamor-0 {
+  [data-css-1kjhlaz] {
     font-size: 20px;
     margin: 10px;
   }
@@ -34,7 +34,7 @@ glamor-0 {
 
 exports[`3. general tests: pseudo elements - {"& button":{"color":"green"}} 1`] = `
 .css-1stncom button,
-glamor-0 button {
+[data-css-1stncom] button {
   color: green;
 }
 
@@ -45,7 +45,7 @@ glamor-0 button {
 
 exports[`4. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}} 1`] = `
 .css-11zq2gh:hover,
-glamor-0:hover {
+[data-css-11zq2gh]:hover {
   background-color: blue;
 }
 

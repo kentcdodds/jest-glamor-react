@@ -22,7 +22,7 @@ test('Replaces a single class', () => {
   expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(css-12345)/)
 })
 
-test('Replaces multiple classes', () => {
+test('Replaces multiple glamor classes', () => {
   const selectors = ['.css-12345', '.css-67890']
   const styles = `
     .css-12345,
@@ -32,8 +32,8 @@ test('Replaces multiple classes', () => {
       color: palevioletred;
     }
 
-    .css-1tnuino,
-    [data-css-1tnuino] {
+    .css-67890,
+    [data-css-67890] {
       font-size: 1.5em;
       text-align: center;
       color: palevioletred;
@@ -53,4 +53,46 @@ test('Replaces multiple classes', () => {
 
   expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-0)/)
   expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-1)/)
+})
+
+test('does not replace non-glamor classes', () => {
+  const selectors = ['.p-4em']
+  const styles = `
+    .p-4em,
+    [data-p-4em] {
+      padding: 4em;
+    }
+  `
+  const code = `
+      <section
+        className="p-4em"
+      >
+        Hello World
+      </section>
+  `
+
+  expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(glamor-0)/)
+  expect(replaceClassNames(selectors, styles, code)).toMatch(/(p-4em)/)
+})
+
+test('only replaces classes beginning with "css-"', () => {
+  const selectors = ['.not-glamor-css-1234']
+  const styles = `
+    .not-glamor-css-1234,
+    [data-not-glamor-css-1234] {
+      padding: 4em;
+    }
+  `
+  const code = `
+      <section
+        className="not-glamor-css-1234"
+      >
+        Hello World
+      </section>
+  `
+
+  expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(glamor-0)/)
+  expect(replaceClassNames(selectors, styles, code)).toMatch(
+    /(not-glamor-css-1234)/,
+  )
 })
