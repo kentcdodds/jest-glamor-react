@@ -1,81 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`1. general tests: media queries - {"fontSize":24,"margin":12,"@media (max-width: 641px)":{"fontSize":20,"margin":10}} 1`] = `
-.c0 {
+.glamor-0 {
   font-size: 24px;
 }
 
-.c1 {
+.glamor-1 {
   margin: 12px;
 }
 
 @media (max-width: 641px) {
-  .c2 {
+  .glamor-2 {
     font-size: 20px;
   }
 }
 
 @media (max-width: 641px) {
-  .c3 {
+  .glamor-3 {
     margin: 10px;
   }
 }
 
 <div
-  className="c0 c1 c2 c3"
+  className="glamor-0 glamor-1 glamor-2 glamor-3"
 />
 `;
 
 exports[`2. general tests: pseudo elements - {"& button":{"color":"green"}} 1`] = `
-.c0 & button {
+.glamor-0 & button {
   color: green;
 }
 
 <div
-  className="c0"
+  className="glamor-0"
 />
 `;
 
 exports[`3. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}} 1`] = `
-.c0:hover {
+.glamor-0:hover {
   background-color: blue;
 }
 
 <div
-  className="c0"
+  className="glamor-0"
 />
 `;
 
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
 
 exports[`enzyme.mount 1`] = `
-.c3 {
+.glamor-3 {
   padding: 4em;
 }
 
-.c4 {
+.glamor-4 {
   background: papayawhip;
 }
 
-.c0 {
+.glamor-0 {
   font-size: 1.5em;
 }
 
-.c1 {
+.glamor-1 {
   text-align: center;
 }
 
-.c2 {
+.glamor-2 {
   color: palevioletred;
 }
 
 <Wrapper>
   <section
-    className="c3 c4"
+    className="glamor-3 glamor-4"
   >
     <Title>
       <h1
-        className="c0 c1 c2"
+        className="glamor-0 glamor-1 glamor-2"
       >
         Hello World, this is my first glamor styled component!
       </h1>
@@ -85,31 +85,31 @@ exports[`enzyme.mount 1`] = `
 `;
 
 exports[`enzyme.render 1`] = `
-.c3 {
+.glamor-3 {
   padding: 4em;
 }
 
-.c4 {
+.glamor-4 {
   background: papayawhip;
 }
 
-.c0 {
+.glamor-0 {
   font-size: 1.5em;
 }
 
-.c1 {
+.glamor-1 {
   text-align: center;
 }
 
-.c2 {
+.glamor-2 {
   color: palevioletred;
 }
 
 <section
-  class="c3 c4"
+  class="glamor-3 glamor-4"
 >
   <h1
-    class="c0 c1 c2"
+    class="glamor-0 glamor-1 glamor-2"
   >
     Hello World, this is my first glamor styled component!
   </h1>
@@ -117,16 +117,16 @@ exports[`enzyme.render 1`] = `
 `;
 
 exports[`enzyme.shallow 1`] = `
-.c0 {
+.glamor-0 {
   padding: 4em;
 }
 
-.c1 {
+.glamor-1 {
   background: papayawhip;
 }
 
 <section
-  className="c0 c1"
+  className="glamor-0 glamor-1"
 >
   <Title>
     Hello World, this is my first glamor styled component!
@@ -135,31 +135,31 @@ exports[`enzyme.shallow 1`] = `
 `;
 
 exports[`react-test-renderer 1`] = `
-.c3 {
+.glamor-3 {
   padding: 4em;
 }
 
-.c4 {
+.glamor-4 {
   background: papayawhip;
 }
 
-.c0 {
+.glamor-0 {
   font-size: 1.5em;
 }
 
-.c1 {
+.glamor-1 {
   text-align: center;
 }
 
-.c2 {
+.glamor-2 {
   color: palevioletred;
 }
 
 <section
-  className="c3 c4"
+  className="glamor-3 glamor-4"
 >
   <h1
-    className="c0 c1 c2"
+    className="glamor-0 glamor-1 glamor-2"
   >
     Hello World, this is my first glamor styled component!
   </h1>
@@ -167,17 +167,17 @@ exports[`react-test-renderer 1`] = `
 `;
 
 exports[`works when the root element does not have styles 1`] = `
-.c0 {
+.glamor-0 {
   padding: 4em;
 }
 
-.c1 {
+.glamor-1 {
   background: papayawhip;
 }
 
 <div>
   <section
-    className="c0 c1"
+    className="glamor-0 glamor-1"
   />
 </div>
 `;

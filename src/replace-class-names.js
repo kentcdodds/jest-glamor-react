@@ -5,7 +5,7 @@ const replaceClassNames = (selectors, styles, code) => {
       className.replace('.', '').replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'),
       'g',
     )
-    return acc.replace(escapedRegex, `c${index++}`)
+    return acc.replace(escapedRegex, `glamor-${index++}`)
   }, `${styles}\n\n${code}`)
 }
 

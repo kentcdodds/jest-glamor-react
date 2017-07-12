@@ -18,7 +18,7 @@ test('Replaces a single class', () => {
       </h1>
   `
 
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(c0)/)
+  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-0)/)
   expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(css-12345)/)
 })
 
@@ -51,6 +51,6 @@ test('Replaces multiple classes', () => {
       </section>
   `
 
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(c0)/)
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(c1)/)
+  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-0)/)
+  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-1)/)
 })
