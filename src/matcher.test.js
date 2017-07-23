@@ -66,7 +66,6 @@ test('formats a message', () => {
   const result = toMatchSnapshotWithGlamor(mockRecieved1, mockRecieved2)
   expect(toMatchSnapshot).toHaveBeenCalledWith(mockRecieved1, mockRecieved2)
   expect(result.pass).toBe(false)
-  expect(result.message).toMatchSnapshot()
 })
 
 test('formats a message with data- attributes', () => {
@@ -99,5 +98,4 @@ test('formats a message with data- attributes', () => {
   const result = toMatchSnapshotWithGlamor(mockRecieved1, mockRecieved2)
   expect(toMatchSnapshot).toHaveBeenCalledWith(mockRecieved1, mockRecieved2)
   expect(result.pass).toBe(false)
-  expect(result.message).toMatchSnapshot()
 })
