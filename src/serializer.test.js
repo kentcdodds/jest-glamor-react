@@ -3,10 +3,9 @@ import renderer from 'react-test-renderer'
 import * as glamor from 'glamor'
 import * as enzyme from 'enzyme'
 import toJson from 'enzyme-to-json'
-import {matcher, serializer} from '../src'
+import serializer from './serializer'
 
 expect.addSnapshotSerializer(serializer)
-expect.extend(matcher)
 
 function Wrapper(props) {
   const className = glamor.css({
@@ -34,7 +33,7 @@ test('react-test-renderer', () => {
     )
     .toJSON()
 
-  expect(tree).toMatchSnapshotWithGlamor()
+  expect(tree).toMatchSnapshot()
 })
 
 test('enzyme', () => {
@@ -47,7 +46,7 @@ test('enzyme', () => {
   const enzymeMethods = ['shallow', 'mount', 'render']
   enzymeMethods.forEach(method => {
     const tree = enzyme[method](ui)
-    expect(toJson(tree)).toMatchSnapshotWithGlamor(`enzyme.${method}`)
+    expect(toJson(tree)).toMatchSnapshot(`enzyme.${method}`)
   })
 })
 
@@ -60,13 +59,13 @@ test('works when the root element does not have styles', () => {
     )
     .toJSON()
 
-  expect(tree).toMatchSnapshotWithGlamor()
+  expect(tree).toMatchSnapshot()
 })
 
 test(`doesn't mess up stuff that does't have styles`, () => {
   const tree = renderer.create(<div />).toJSON()
 
-  expect(tree).toMatchSnapshotWithGlamor()
+  expect(tree).toMatchSnapshot()
 })
 
 const generalTests = [
@@ -109,7 +108,7 @@ const generalTests = [
 generalTests.forEach(({title, styles}, index) => {
   test(title, () => {
     const tree = renderer.create(<div {...glamor.css(styles)} />)
-    expect(tree).toMatchSnapshotWithGlamor(
+    expect(tree).toMatchSnapshot(
       `${index + 1}. general tests: ${title} - ${JSON.stringify(styles)}`,
     )
   })
