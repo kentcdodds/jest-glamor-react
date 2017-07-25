@@ -4,22 +4,22 @@ test('Replaces a single class', () => {
   const selectors = ['.css-12345']
   const styles = `
     .css-12345,
-      [data-css-12345] {
-        font-size: 1.5em;
-        text-align: center;
-        color: palevioletred;
-      }
+    [data-css-12345] {
+      font-size: 1.5em;
+      text-align: center;
+      color: palevioletred;
+    }
   `
   const code = `
-      <h1
-        className="changed-class css-12345"
-      >
-        Hello World, this is my first glamor styled component!
-      </h1>
+    <h1
+      className="changed-class css-12345"
+    >
+      Hello World, this is my first glamor styled component!
+    </h1>
   `
-
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-0)/)
-  expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(css-12345)/)
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).toMatch(/(glamor-0)/)
+  expect(result).not.toMatch(/(css-12345)/)
 })
 
 test('Replaces multiple glamor classes', () => {
@@ -40,19 +40,19 @@ test('Replaces multiple glamor classes', () => {
     }
   `
   const code = `
-      <section
-        className="some-other-class css-12345"
+    <section
+      className="some-other-class css-12345"
+    >
+      <h1
+        className="changed-class css-67890"
       >
-        <h1
-          className="changed-class css-67890"
-        >
-          Hello World, this is my first glamor styled component!
-        </h1>
-      </section>
+        Hello World, this is my first glamor styled component!
+      </h1>
+    </section>
   `
-
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-0)/)
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(glamor-1)/)
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).toMatch(/(glamor-0)/)
+  expect(result).toMatch(/(glamor-1)/)
 })
 
 test('does not replace non-glamor classes', () => {
@@ -64,15 +64,15 @@ test('does not replace non-glamor classes', () => {
     }
   `
   const code = `
-      <section
-        className="p-4em"
-      >
-        Hello World
-      </section>
+    <section
+      className="p-4em"
+    >
+      Hello World
+    </section>
   `
-
-  expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(glamor-0)/)
-  expect(replaceClassNames(selectors, styles, code)).toMatch(/(p-4em)/)
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).not.toMatch(/(glamor-0)/)
+  expect(result).toMatch(/(p-4em)/)
 })
 
 test('only replaces classes beginning with "css-"', () => {
@@ -84,15 +84,50 @@ test('only replaces classes beginning with "css-"', () => {
     }
   `
   const code = `
-      <section
-        className="not-glamor-css-1234"
-      >
-        Hello World
-      </section>
+    <section
+      className="not-glamor-css-1234"
+    >
+      Hello World
+    </section>
   `
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).not.toMatch(/(glamor-0)/)
+  expect(result).toMatch(/(not-glamor-css-1234)/)
+})
 
-  expect(replaceClassNames(selectors, styles, code)).not.toMatch(/(glamor-0)/)
-  expect(replaceClassNames(selectors, styles, code)).toMatch(
-    /(not-glamor-css-1234)/,
-  )
+test('replaces css-nil classes', () => {
+  const selectors = ['.css-nil']
+  const styles = ``
+  const code = `
+    <h1
+      className="changed-class css-nil"
+    >
+      Hello World, this is my first glamor styled component!
+    </h1>
+  `
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).toMatch(/(glamor-0)/)
+  expect(result).not.toMatch(/(css-nil)/)
+})
+
+test('replaces css-label- classes', () => {
+  const selectors = ['.css-label-12345']
+  const styles = `
+    .css-label-12345,
+    [data-css-label-12345] {
+      font-size: 1.5em;
+      text-align: center;
+      color: palevioletred;
+    }
+  `
+  const code = `
+    <h1
+      className="changed-class css-label-12345"
+    >
+      Hello World, this is my first glamor styled component!
+    </h1>
+  `
+  const result = replaceClassNames(selectors, styles, code)
+  expect(result).toMatch(/(glamor-0)/)
+  expect(result).not.toMatch(/(css-label-12345)/)
 })

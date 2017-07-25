@@ -2,7 +2,7 @@
   "name": "jest-glamor-react",
   "version": "0.0.0-semantically-released",
   "description": "Jest utilities for Glamor and React",
-  "main": "dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "start": "nps",
     "test": "nps test",
@@ -10,7 +10,8 @@
     "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
   },
   "files": [
-    "dist"
+    "dist",
+    "index.js"
   ],
   "keywords": [],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",

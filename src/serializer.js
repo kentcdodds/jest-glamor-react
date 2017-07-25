@@ -1,12 +1,11 @@
 const css = require('css')
-const {styleSheet: glamorStyleSheet} = require('glamor')
 const {replaceClassNames} = require('./replace-class-names')
 
 function createSerializer(styleSheet) {
   function test(val) {
-    return (
-      val && !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
-    )
+    return val &&
+      !val.withStyles &&
+      val.$$typeof === Symbol.for('react.test.json')
   }
 
   function print(val, printer) {
@@ -42,12 +41,15 @@ function createSerializer(styleSheet) {
         className.toString().split(' ').map(cn => `.${cn}`),
       )
     }
-    const dataProps = Object.keys(props).reduce((dProps, key) => {
-      if (key.startsWith('data-')) {
-        dProps.push(`[${key}]`)
-      }
-      return dProps
-    }, [])
+    const dataProps = Object.keys(props).reduce(
+      (dProps, key) => {
+        if (key.startsWith('data-')) {
+          dProps.push(`[${key}]`)
+        }
+        return dProps
+      },
+      [],
+    )
     if (dataProps.length) {
       selectors = selectors.concat(dataProps)
     }
@@ -55,7 +57,10 @@ function createSerializer(styleSheet) {
   }
 
   function getStyles(nodeSelectors) {
-    const styles = styleSheet.tags
+    const tags = typeof styleSheet === 'function' ?
+      styleSheet().tags :
+      styleSheet.tags
+    const styles = tags
       .map(tag => /* istanbul ignore next */ tag.textContent || '')
       .join('\n')
     const ast = css.parse(styles)
@@ -79,22 +84,26 @@ function createSerializer(styleSheet) {
   }
 
   function getMediaQueries(ast, filter) {
-    return ast.stylesheet.rules
-      .filter(rule => rule.type === 'media')
-      .reduce((acc, mediaQuery) => {
-        mediaQuery.rules = mediaQuery.rules.filter(filter)
+    return ast.stylesheet.rules.filter(rule => rule.type === 'media').reduce((
+      acc,
+      mediaQuery,
+    ) => {
+      mediaQuery.rules = mediaQuery.rules.filter(filter)
 
-        if (mediaQuery.rules.length) {
-          return acc.concat(mediaQuery)
-        }
+      if (mediaQuery.rules.length) {
+        return acc.concat(mediaQuery)
+      }
 
-        return acc
-      }, [])
+      return acc
+    }, [])
   }
   return {test, print}
 }
 
-const glamorSerializer = createSerializer(glamorStyleSheet)
+// doing this to make it easier for users to mock things
+// like switching between development mode and whatnot.
+const getGlamorStyleSheet = () => require('glamor').styleSheet
+const glamorSerializer = createSerializer(getGlamorStyleSheet)
 createSerializer.test = glamorSerializer.test
 createSerializer.print = glamorSerializer.print
 

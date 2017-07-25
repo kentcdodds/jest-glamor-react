@@ -87,10 +87,19 @@ npm install --save-dev jest-glamor-react
 At the top of your test file:
 
 ```javascript
-import {matcher, serializer} from 'jest-glamor-react'
+import serializer from 'jest-glamor-react'
 
 expect.addSnapshotSerializer(serializer)
-expect.extend(matcher)
+```
+
+Or in your Jest serializer config:
+
+```javascript
+{
+  "snapshotSerializers": [
+    "jest-glamor-react"
+  ]
+}
 ```
 
 Here are some components:
@@ -132,7 +141,7 @@ test('react-test-renderer', () => {
     )
     .toJSON()
 
-  expect(tree).toMatchSnapshotWithGlamor()
+  expect(tree).toMatchSnapshot()
 })
 ```
 
@@ -149,9 +158,9 @@ test('enzyme', () => {
     </Wrapper>
   )
 
-  expect(toJson(enzyme.shallow(ui))).toMatchSnapshotWithGlamor(`enzyme.shallow`)
-  expect(toJson(enzyme.mount(ui))).toMatchSnapshotWithGlamor(`enzyme.mount`)
-  expect(toJson(enzyme.render(ui))).toMatchSnapshotWithGlamor(`enzyme.render`)
+  expect(toJson(enzyme.shallow(ui))).toMatchSnapshot(`enzyme.shallow`)
+  expect(toJson(enzyme.mount(ui))).toMatchSnapshot(`enzyme.mount`)
+  expect(toJson(enzyme.render(ui))).toMatchSnapshot(`enzyme.render`)
 })
 ```
 
@@ -159,10 +168,9 @@ If you use a library with a similar stylesheet solution to [`glamor`][glamor] li
 
 ```javascript
 import {sheet} from 'cxs'
-import {matcher, serializer} from 'jest-glamor-react'
+import serializer from 'jest-glamor-react'
 
 expect.addSnapshotSerializer(serializer(sheet))
-expect.extend(matcher)
 ```
 
 Then you can create components like this:
