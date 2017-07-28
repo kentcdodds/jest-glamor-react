@@ -54,6 +54,19 @@ exports[`4. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}}
 />
 `;
 
+exports[`5. general tests: supports queries - {"@supports (display: grid)":{"display":"grid"}} 1`] = `
+@supports (display: grid) {
+  .css-9qoyy,
+  [data-css-9qoyy] {
+    display: grid;
+  }
+}
+
+<div
+  data-css-9qoyy=""
+/>
+`;
+
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
 
 exports[`enzyme.mount 1`] = `
