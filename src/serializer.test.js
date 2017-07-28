@@ -103,6 +103,14 @@ const generalTests = [
       },
     },
   },
+  {
+    title: 'supports queries',
+    styles: {
+      '@supports (display: grid)': {
+        display: 'grid',
+      },
+    },
+  },
 ]
 
 generalTests.forEach(({title, styles}, index) => {

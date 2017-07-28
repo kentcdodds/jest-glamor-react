@@ -84,18 +84,20 @@ function createSerializer(styleSheet) {
   }
 
   function getMediaQueries(ast, filter) {
-    return ast.stylesheet.rules.filter(rule => rule.type === 'media').reduce((
-      acc,
-      mediaQuery,
-    ) => {
-      mediaQuery.rules = mediaQuery.rules.filter(filter)
+    return ast.stylesheet.rules
+      .filter(rule => rule.type === 'media' || rule.type === 'supports')
+      .reduce(
+        (acc, mediaQuery) => {
+          mediaQuery.rules = mediaQuery.rules.filter(filter)
 
-      if (mediaQuery.rules.length) {
-        return acc.concat(mediaQuery)
-      }
+          if (mediaQuery.rules.length) {
+            return acc.concat(mediaQuery)
+          }
 
-      return acc
-    }, [])
+          return acc
+        },
+        [],
+      )
   }
   return {test, print}
 }
