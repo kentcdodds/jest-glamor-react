@@ -102,7 +102,7 @@ Or in your Jest serializer config:
 }
 ```
 
-If you have set jest.config variable `"testEnvironment": "node"`, you will need to manually mock up browser gloabl objects
+If you have set jest.config variable `"testEnvironment": "node"`, you will need to manually mock up browser gloabl objects so it is recommended to use `"testEnvironment": "jsdom"` instead.
 
 Here are some components:
 
