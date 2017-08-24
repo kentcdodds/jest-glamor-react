@@ -9,7 +9,7 @@ Jest utilities for Glamor and React
 [![downloads][downloads-badge]][npm-stat]
 [![MIT License][license-badge]][LICENSE]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Donate][donate-badge]][donate]
 [![Code of Conduct][coc-badge]][coc]
@@ -101,6 +101,8 @@ Or in your Jest serializer config:
   ]
 }
 ```
+
+If you have set jest.config variable `"testEnvironment": "node"`, you will need to manually mock up browser gloabl objects so it is recommended to use `"testEnvironment": "jsdom"` instead.
 
 Here are some components:
 
@@ -216,8 +218,8 @@ I'm unaware of other solutions. Please file a PR if you know of any!
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/1308971?v=3" width="100px;"/><br /><sub>Michele Bertoli</sub>](http://michele.berto.li)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Tests") | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11481355?v=3" width="100px;"/><br /><sub>Mitchell Hamilton</sub>](https://hamil.town)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11878516?v=3" width="100px;"/><br /><sub>jhurley23</sub>](https://github.com/jhurley23)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Code") |
-| :---: | :---: | :---: | :---: |
+| [<img src="https://avatars1.githubusercontent.com/u/1308971?v=3" width="100px;"/><br /><sub>Michele Bertoli</sub>](http://michele.berto.li)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Tests") | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11481355?v=3" width="100px;"/><br /><sub>Mitchell Hamilton</sub>](https://hamil.town)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11878516?v=3" width="100px;"/><br /><sub>jhurley23</sub>](https://github.com/jhurley23)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Code") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Tests") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/27758243?v=4" width="100px;"/><br /><sub>Gaurav Talwar</sub>](https://github.com/megaurav2002)<br /> |
+| :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification. Contributions of any kind welcome!
