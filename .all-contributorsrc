@@ -58,6 +58,16 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/27758243?v=4",
       "profile": "https://github.com/megaurav2002",
       "contributions": []
+    },
+    {
+      "login": "hjylewis",
+      "name": "Henry Lewis",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6494737?v=4",
+      "profile": "http://hjylewis.com/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
