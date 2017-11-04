@@ -67,6 +67,17 @@ exports[`5. general tests: supports queries - {"@supports (display: grid)":{"dis
 />
 `;
 
+exports[`6. general tests: Appended class - {"&.button":{"color":"green"}} 1`] = `
+.css-95zeve.button,
+[data-css-95zeve].button {
+  color: green;
+}
+
+<div
+  data-css-95zeve=""
+/>
+`;
+
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
 
 exports[`enzyme.mount 1`] = `

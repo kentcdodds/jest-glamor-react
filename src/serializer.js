@@ -87,8 +87,10 @@ function createSerializer(styleSheet) {
     function filter(rule) {
       if (rule.type === 'rule') {
         return rule.selectors.some(selector => {
-          const baseSelector = selector.split(/:| /)[0]
-          return nodeSelectors.includes(baseSelector)
+          let baseSelector = selector.split(/:| |\./).filter(s => !!s)[0]
+          return nodeSelectors.some(
+            sel => sel === baseSelector || sel === `.${baseSelector}`,
+          )
         })
       }
       return false
