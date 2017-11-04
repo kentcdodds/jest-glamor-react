@@ -1,7 +1,7 @@
 const css = require('css')
 const {replaceClassNames} = require('./replace-class-names')
 
-function createSerializer(styleSheet) {
+function createSerializer(styleSheet, classNameReplacer) {
   function test(val) {
     return val &&
       !val.withStyles &&
@@ -15,7 +15,12 @@ function createSerializer(styleSheet) {
     const styles = getStyles(selectors)
     const printedVal = printer(val)
     if (styles) {
-      return replaceClassNames(selectors, styles, printedVal)
+      return replaceClassNames(
+        selectors,
+        styles,
+        printedVal,
+        classNameReplacer,
+      )
     } else {
       return printedVal
     }

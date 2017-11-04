@@ -177,6 +177,21 @@ import serializer from 'jest-glamor-react'
 expect.addSnapshotSerializer(serializer(sheet))
 ```
 
+You can also pass custom class name replacer to serializer function:
+```javascript
+import {sheet} from 'cxs'
+import serializer from 'jest-glamor-react'
+
+function replaceClassNames(className, index) {
+  return `my-class-name-${index}`
+}
+
+expect.addSnapshotSerializer(serializer(sheet, replaceClassNames))
+```
+
+Class name replacer will receive original class name and class name index
+
+
 Then you can create components like this:
 
 ```javascript

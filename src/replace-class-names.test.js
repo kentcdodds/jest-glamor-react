@@ -131,3 +131,41 @@ test('replaces css-label- classes', () => {
   expect(result).toMatch(/(glamor-0)/)
   expect(result).not.toMatch(/(css-label-12345)/)
 })
+
+test('replaces with custom class name replacer', () => {
+  const selectors = ['.css-12345', '.css-67890']
+  const styles = `
+    .css-12345,
+    [data-css-12345] {
+      font-size: 1.5em;
+      text-align: center;
+      color: palevioletred;
+    }
+
+    .css-67890,
+    [data-css-67890] {
+      font-size: 1.5em;
+      text-align: center;
+      color: palevioletred;
+    }
+  `
+  const code = `
+    <section
+      className="some-other-class css-12345"
+    >
+      <h1
+        className="changed-class css-67890"
+      >
+        Hello World, this is my first glamor styled component!
+      </h1>
+    </section>
+  `
+  const result = replaceClassNames(
+    selectors,
+    styles,
+    code,
+    (className, index) => `custom-${index}-${className.replace('.', '')}`,
+  )
+  expect(result).toMatch(/(custom-0-css-12345)/)
+  expect(result).toMatch(/(custom-1-css-67890)/)
+})
