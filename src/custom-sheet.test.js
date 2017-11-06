@@ -96,6 +96,14 @@ const generalTests = [
       },
     },
   },
+  {
+    title: 'Appended class',
+    styles: {
+      '&.button': {
+        color: 'green',
+      },
+    },
+  },
 ]
 
 generalTests.forEach(({title, styles}, index) => {

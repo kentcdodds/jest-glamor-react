@@ -46,6 +46,16 @@ exports[`3. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}}
 />
 `;
 
+exports[`4. general tests: Appended class - {"&.button":{"color":"green"}} 1`] = `
+.__pbutton-c-green &.button {
+  color: green;
+}
+
+<div
+  className="__pbutton-c-green"
+/>
+`;
+
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
 
 exports[`enzyme.mount 1`] = `
