@@ -68,6 +68,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "asvetliakov",
+      "name": "Alexey Svetliakov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8881674?v=4",
+      "profile": "https://github.com/asvetliakov",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
