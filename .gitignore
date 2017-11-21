@@ -4,3 +4,8 @@ dist
 .opt-in
 .opt-out
 
+# JetBrains IDE
+.idea
+
+# MacOs
+.DS_Store
