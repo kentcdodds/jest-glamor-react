@@ -78,6 +78,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "jameswlane",
+      "name": "James W Lane",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/794161?v=4",
+      "profile": "http://jameswlane.com",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
