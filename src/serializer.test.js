@@ -68,6 +68,18 @@ test(`doesn't mess up stuff that does't have styles`, () => {
   expect(tree).toMatchSnapshot()
 })
 
+test(`doesn't mess up stuff when styles have a child selector`, () => {
+  const style = glamor.css({
+    '> div': {
+      display: 'inline-block',
+    },
+  })
+
+  const tree = renderer.create(<div><span {...style} /></div>).toJSON()
+
+  expect(tree).toMatchSnapshot()
+})
+
 const generalTests = [
   {
     title: 'data attributes',
@@ -116,6 +128,14 @@ const generalTests = [
     styles: {
       '&.button': {
         color: 'green',
+      },
+    },
+  },
+  {
+    title: 'Child selector',
+    styles: {
+      '> div': {
+        display: 'inline-block',
       },
     },
   },

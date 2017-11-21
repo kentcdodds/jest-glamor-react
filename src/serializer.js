@@ -73,6 +73,13 @@ function createSerializer(styleSheet, classNameReplacer) {
     return selectors
   }
 
+  function filterChildSelector(baseSelector) {
+    if (baseSelector.slice(-1) === '>') {
+      return baseSelector.slice(0, -1)
+    }
+    return baseSelector
+  }
+
   function getStyles(nodeSelectors) {
     const tags = typeof styleSheet === 'function' ?
       styleSheet().tags :
@@ -92,7 +99,9 @@ function createSerializer(styleSheet, classNameReplacer) {
     function filter(rule) {
       if (rule.type === 'rule') {
         return rule.selectors.some(selector => {
-          const baseSelector = selector.split(/:| |\./).filter(s => !!s)[0]
+          const baseSelector = filterChildSelector(
+            selector.split(/:| |\./).filter(s => !!s)[0],
+          )
           return nodeSelectors.some(
             sel => sel === baseSelector || sel === `.${baseSelector}`,
           )
