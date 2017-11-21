@@ -78,7 +78,31 @@ exports[`6. general tests: Appended class - {"&.button":{"color":"green"}} 1`] =
 />
 `;
 
+exports[`7. general tests: Child selector - {"> div":{"display":"inline-block"}} 1`] = `
+.css-v2yp9i> div,
+[data-css-v2yp9i]> div {
+  display: inline-block;
+}
+
+<div
+  data-css-v2yp9i=""
+/>
+`;
+
 exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
+
+exports[`doesn't mess up stuff when styles have a child selector 1`] = `
+.css-v2yp9i> div,
+[data-css-v2yp9i]> div {
+  display: inline-block;
+}
+
+<div>
+  <span
+    data-css-v2yp9i=""
+  />
+</div>
+`;
 
 exports[`enzyme.mount 1`] = `
 .glamor-1,
