@@ -22,7 +22,7 @@ const replaceClassNames = (
       }
       return acc
     },
-    `${styles}\n\n${code}`,
+    `${styles ? `${styles}\n\n` : ''}${code}`,
   )
 }
 

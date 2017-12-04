@@ -14,16 +14,8 @@ function createSerializer(styleSheet, classNameReplacer) {
     const selectors = getSelectors(nodes)
     const styles = getStyles(selectors)
     const printedVal = printer(val)
-    if (styles) {
-      return replaceClassNames(
-        selectors,
-        styles,
-        printedVal,
-        classNameReplacer,
-      )
-    } else {
-      return printedVal
-    }
+
+    return replaceClassNames(selectors, styles, printedVal, classNameReplacer)
   }
 
   function getNodes(node, nodes = []) {
