@@ -2,7 +2,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import * as glamor from 'glamor'
 import * as enzyme from 'enzyme'
-import {toHaveStyleRule} from './to-have-style-rule'
+import {toHaveStyleRule} from './matchers'
 import serializer from './serializer'
 
 expect.addSnapshotSerializer(serializer)

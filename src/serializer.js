@@ -25,6 +25,7 @@ function createSerializer(styleSheet, classNameReplacer) {
       return printedVal
     }
   }
+
   return {test, print}
 }
 
