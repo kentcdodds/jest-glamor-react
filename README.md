@@ -253,7 +253,7 @@ test('react-test-renderer', () => {
 })
 ```
 
-Or using Enzyme's `shallow` or `mount` methods:
+Or using Enzyme:
 
 ```javascript
 import {mount} from 'enzyme'

@@ -49,13 +49,15 @@ test('enzyme', () => {
     </Wrapper>
   )
 
-  const enzymeMethods = ['shallow', 'mount']
+  const enzymeMethods = ['shallow', 'mount', 'render']
   enzymeMethods.forEach(method => {
     const wrapper = enzyme[method](ui)
     expect(wrapper).toHaveStyleRule('background', 'papayawhip')
     expect(wrapper).not.toHaveStyleRule('color', 'palevioletred')
 
-    const title = wrapper.find(Title)
+    const title = method === 'render' ?
+      wrapper.find('h1') :
+      wrapper.find(Title)
     expect(title).not.toHaveStyleRule('background', 'papayawhip')
     expect(title).toHaveStyleRule('color', 'palevioletred')
   })

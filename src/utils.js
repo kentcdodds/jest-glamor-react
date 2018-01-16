@@ -135,6 +135,15 @@ function getClassNameFromTestRenderer(received) {
   return received.props.className || received.props.class
 }
 
+function getClassNameFromCheerio(received) {
+  if (received[0].type === 'root') {
+    return received.children().first().attr('class')
+  } else {
+    return received.attr('class')
+  }
+}
+
+// eslint-disable-next-line complexity
 function getClassNames(received) {
   let className
 
@@ -143,6 +152,8 @@ function getClassNames(received) {
       className = getClassNameFromTestRenderer(received)
     } else if (typeof received.findWhere === 'function') {
       className = getClassNameFromEnzyme(received)
+    } else if (received.cheerio === '[cheerio object]') {
+      className = getClassNameFromCheerio(received)
     }
   }
 
