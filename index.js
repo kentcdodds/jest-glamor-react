@@ -1,5 +1,5 @@
 const serializer = require('./dist/serializer')
-const {toHaveStyleRule} = require('./matchers')
+const {toHaveStyleRule} = require('./dist/matchers')
 
 module.exports = serializer
 module.exports.toHaveStyleRule = toHaveStyleRule
