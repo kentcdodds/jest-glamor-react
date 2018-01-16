@@ -256,10 +256,10 @@ test('react-test-renderer', () => {
 Or using Enzyme's `shallow` or `mount` methods:
 
 ```javascript
-import {shallow} from 'enzyme'
+import {mount} from 'enzyme'
 
 test('enzyme', () => {
-  const wrapper = (
+  const wrapper = mount(
     <Wrapper>
       <Title>Hello World, this is my first glamor styled component!</Title>
     </Wrapper>
