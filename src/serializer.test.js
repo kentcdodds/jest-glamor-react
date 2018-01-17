@@ -80,6 +80,11 @@ test(`doesn't mess up stuff when styles have a child selector`, () => {
   expect(tree).toMatchSnapshot()
 })
 
+test(`works when css-***** selectors don't have styles`, () => {
+  const tree = renderer.create(<div className="css-foo css-bar" />).toJSON()
+  expect(tree).toMatchSnapshot()
+})
+
 const generalTests = [
   {
     title: 'data attributes',

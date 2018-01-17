@@ -199,6 +199,12 @@ exports[`react-test-renderer 1`] = `
 </section>
 `;
 
+exports[`works when css-***** selectors don't have styles 1`] = `
+<div
+  className="glamor-0 glamor-1"
+/>
+`;
+
 exports[`works when the root element does not have styles 1`] = `
 .glamor-0,
 [data-glamor-0] {
