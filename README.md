@@ -218,6 +218,57 @@ function Title(props) {
 
 And test them the same way as before.
 
+## Custom matchers
+
+### toHaveStyleRule(property, value)
+
+`expect(node).toHaveStyleRule(property: string, value: string | RegExp)`
+
+#### Installation:
+
+```javascript
+import serializer, { toHaveStyleRule } from 'jest-glamor-react'
+expect.addSnapshotSerializer(serializer)
+expect.extend({toHaveStyleRule})
+```
+
+#### Usage:
+
+To test the same components we defined in the examples above we might:
+
+```javascript
+import React from 'react'
+import renderer from 'react-test-renderer'
+
+test('react-test-renderer', () => {
+  const tree = renderer
+    .create(
+      <Wrapper>
+        <Title>Hello World, this is my first glamor styled component!</Title>
+      </Wrapper>,
+    )
+    .toJSON()
+
+  expect(tree).toHaveStyleRule('background', 'papayawhip')
+})
+```
+
+Or using Enzyme:
+
+```javascript
+import {mount} from 'enzyme'
+
+test('enzyme', () => {
+  const wrapper = mount(
+    <Wrapper>
+      <Title>Hello World, this is my first glamor styled component!</Title>
+    </Wrapper>
+  )
+
+  expect(wrapper).toHaveStyleRule('background', 'papayawhip')
+  expect(wrapper.find(Title)).toHaveStyleRule('color', 'palevioletred')
+})
+```
 
 ## Inspiration
 
