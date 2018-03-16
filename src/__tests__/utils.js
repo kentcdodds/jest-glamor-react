@@ -1,7 +1,7 @@
 import * as enzyme from 'enzyme'
 import renderer from 'react-test-renderer'
 import React from 'react'
-import {getClassNames, getNodes, getSelectors} from './utils'
+import {getClassNames, getNodes, getSelectors} from '../utils'
 
 const enzymeMethods = ['shallow', 'mount', 'render']
 
@@ -38,7 +38,9 @@ describe('getClassNames', () => {
     it('handle subcomponents', () => {
       enzymeMethods.forEach(method => {
         const wrapper = enzyme[method](
-          <div className="test1"><span className="test2" /></div>,
+          <div className="test1">
+            <span className="test2" />
+          </div>,
         )
         const subcomponent = wrapper.find('span')
         expect(getClassNames(subcomponent)).toEqual(['test2'])
@@ -59,7 +61,9 @@ describe('getClassNames', () => {
 describe('getNodes', () => {
   it('works on enzyme ReactWrappers', () => {
     const wrapper = enzyme.mount(
-      <div className="test1"><div className="test2" /></div>,
+      <div className="test1">
+        <div className="test2" />
+      </div>,
     )
     expect(getNodes(wrapper)).toHaveLength(1)
   })
@@ -68,7 +72,9 @@ describe('getNodes', () => {
 describe('getSelectors', () => {
   it('works on enzyme ReactWrappers', () => {
     const wrapper = enzyme.mount(
-      <div className="test1"><div className="test2" /></div>,
+      <div className="test1">
+        <div className="test2" />
+      </div>,
     )
     expect(getSelectors(wrapper)).toHaveLength(1)
   })

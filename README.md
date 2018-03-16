@@ -4,10 +4,9 @@ Jest utilities for Glamor and React
 
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
-[![Dependencies][dependencyci-badge]][dependencyci]
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npm-stat]
-[![MIT License][license-badge]][LICENSE]
+[![MIT License][license-badge]][license]
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
@@ -45,15 +44,15 @@ through the code to know _what_ caused the class name to change.
 This allows your snapshots to look more like:
 
 ```html
-.css-1tnuino,
-[data-css-1tnuino] {
+.css-0,
+[data-css-0] {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
 }
 
 <h1
-  class="css-1tnuino"
+  class="css-0"
 >
   Hello World
 </h1>
@@ -62,14 +61,32 @@ This allows your snapshots to look more like:
 This is much more helpful because now you can see the CSS applied and over time
 it becomes even more helpful to see how that changes over time.
 
-This builds on the work from [@MicheleBertoli][MicheleBertoli] in
+This builds on the work from [@MicheleBertoli][michelebertoli] in
 [`jest-styled-components`][jest-styled-components] to bring a similar experience
 to React projects that use [`glamor`][glamor].
+
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+* [Preview](#preview)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Custom matchers](#custom-matchers)
+  * [toHaveStyleRule(property, value)](#tohavestyleruleproperty-value)
+* [Inspiration](#inspiration)
+* [Other Solutions](#other-solutions)
+* [Contributors](#contributors)
+* [LICENSE](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ### Preview
 
 <img
-  src="https://github.com/kentcdodds/jest-glamor-react/raw/master/other/screenshot.png"
+  src="https://raw.githubusercontent.com/kentcdodds/jest-glamor-react/master/other/screenshot.png"
   alt="Terminal Screenshot"
   title="Terminal Screenshot"
   width="500px"
@@ -130,6 +147,28 @@ function Title(props) {
 }
 ```
 
+Here's how we'd test them with `ReactDOM.render`:
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+function render(ui) {
+  const div = document.createElement('div')
+  ReactDOM.render(ui, div)
+  return div.children[0]
+}
+
+test('react-dom', () => {
+  const node = render(
+    <Wrapper>
+      <Title>Hello World, this is my first glamor styled component!</Title>
+    </Wrapper>,
+  )
+  expect(node).toMatchSnapshot()
+})
+```
+
 And here's how we'd test them with `react-test-renderer`:
 
 ```javascript
@@ -168,56 +207,6 @@ test('enzyme', () => {
 })
 ```
 
-If you use a library with a similar stylesheet solution to [`glamor`][glamor] like [`cxs`][cxs] you can do this instead:
-
-```javascript
-import {sheet} from 'cxs'
-import serializer from 'jest-glamor-react'
-
-expect.addSnapshotSerializer(serializer(sheet))
-```
-
-You can also pass custom class name replacer to serializer function:
-```javascript
-import {sheet} from 'cxs'
-import serializer from 'jest-glamor-react'
-
-function replaceClassNames(className, index) {
-  return `my-class-name-${index}`
-}
-
-expect.addSnapshotSerializer(serializer(sheet, replaceClassNames))
-```
-
-Class name replacer will receive original class name and class name index
-
-
-Then you can create components like this:
-
-```javascript
-import React from 'react'
-import cxs from 'cxs'
-
-function Wrapper(props) {
-  const className = cxs({
-    padding: '4em',
-    background: 'papayawhip',
-  })
-  return <section className={`${className}`} {...props} />
-}
-
-function Title(props) {
-  const className = cxs({
-    fontSize: '1.5em',
-    textAlign: 'center',
-    color: 'palevioletred',
-  })
-  return <h1 className={`${className}`} {...props} />
-}
-```
-
-And test them the same way as before.
-
 ## Custom matchers
 
 ### toHaveStyleRule(property, value)
@@ -227,14 +216,36 @@ And test them the same way as before.
 #### Installation:
 
 ```javascript
-import serializer, { toHaveStyleRule } from 'jest-glamor-react'
+import serializer, {toHaveStyleRule} from 'jest-glamor-react'
 expect.addSnapshotSerializer(serializer)
 expect.extend({toHaveStyleRule})
 ```
 
 #### Usage:
 
-To test the same components we defined in the examples above we might:
+If we use the same examples as those above:
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+function render(ui) {
+  const div = document.createElement('div')
+  ReactDOM.render(ui, div)
+  return div.children[0]
+}
+
+test('react-dom', () => {
+  const node = render(
+    <Wrapper>
+      <Title>Hello World, this is my first glamor styled component!</Title>
+    </Wrapper>,
+  )
+  expect(node).toHaveStyleRule('background', 'papayawhip')
+})
+```
+
+Or with `react-test-renderer`:
 
 ```javascript
 import React from 'react'
@@ -262,7 +273,7 @@ test('enzyme', () => {
   const wrapper = mount(
     <Wrapper>
       <Title>Hello World, this is my first glamor styled component!</Title>
-    </Wrapper>
+    </Wrapper>,
   )
 
   expect(wrapper).toHaveStyleRule('background', 'papayawhip')
@@ -272,7 +283,7 @@ test('enzyme', () => {
 
 ## Inspiration
 
-As mentioned earlier, [@MicheleBertoli][MicheleBertoli]'s
+As mentioned earlier, [@MicheleBertoli][michelebertoli]'s
 [`jest-styled-components`][jest-styled-components] was a huge inspiration for
 this project. And much of the original code came from from that MIT Licensed
 project. Thank you so much Michele! 👏
@@ -286,10 +297,12 @@ I'm unaware of other solutions. Please file a PR if you know of any!
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
 | [<img src="https://avatars1.githubusercontent.com/u/1308971?v=3" width="100px;"/><br /><sub><b>Michele Bertoli</b></sub>](http://michele.berto.li)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=MicheleBertoli "Tests") | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=kentcdodds "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11481355?v=3" width="100px;"/><br /><sub><b>Mitchell Hamilton</b></sub>](https://hamil.town)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Code") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Documentation") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=mitchellhamilton "Tests") | [<img src="https://avatars2.githubusercontent.com/u/11878516?v=3" width="100px;"/><br /><sub><b>jhurley23</b></sub>](https://github.com/jhurley23)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Code") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Tests") [📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=jhurley23 "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/27758243?v=4" width="100px;"/><br /><sub><b>Gaurav Talwar</b></sub>](https://github.com/megaurav2002)<br /> | [<img src="https://avatars3.githubusercontent.com/u/6494737?v=4" width="100px;"/><br /><sub><b>Henry Lewis</b></sub>](http://hjylewis.com/)<br />[🐛](https://github.com/kentcdodds/jest-glamor-react/issues?q=author%3Ahjylewis "Bug reports") [💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=hjylewis "Code") | [<img src="https://avatars2.githubusercontent.com/u/8881674?v=4" width="100px;"/><br /><sub><b>Alexey Svetliakov</b></sub>](https://github.com/asvetliakov)<br />[💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=asvetliakov "Code") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=asvetliakov "Tests") |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars2.githubusercontent.com/u/794161?v=4" width="100px;"/><br /><sub><b>James W Lane</b></sub>](http://jameswlane.com)<br />[🐛](https://github.com/kentcdodds/jest-glamor-react/issues?q=author%3Ajameswlane "Bug reports") [💻](https://github.com/kentcdodds/jest-glamor-react/commits?author=jameswlane "Code") [⚠️](https://github.com/kentcdodds/jest-glamor-react/commits?author=jameswlane "Tests") | [<img src="https://avatars1.githubusercontent.com/u/202773?v=4" width="100px;"/><br /><sub><b>Brent Ertz</b></sub>](https://github.com/brentertz)<br />[📖](https://github.com/kentcdodds/jest-glamor-react/commits?author=brentertz "Documentation") |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification. Contributions of any kind welcome!
@@ -304,8 +317,6 @@ MIT
 [build]: https://travis-ci.org/kentcdodds/jest-glamor-react
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/jest-glamor-react.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/jest-glamor-react
-[dependencyci-badge]: https://dependencyci.com/github/kentcdodds/jest-glamor-react/badge?style=flat-square
-[dependencyci]: https://dependencyci.com/github/kentcdodds/jest-glamor-react
 [version-badge]: https://img.shields.io/npm/v/jest-glamor-react.svg?style=flat-square
 [package]: https://www.npmjs.com/package/jest-glamor-react
 [downloads-badge]: https://img.shields.io/npm/dm/jest-glamor-react.svg?style=flat-square
@@ -333,6 +344,6 @@ MIT
 [glamor]: https://www.npmjs.com/package/glamor
 [snapshot]: http://facebook.github.io/jest/docs/snapshot-testing.html
 [jest]: http://facebook.github.io/jest/
-[MicheleBertoli]: https://github.com/MicheleBertoli
+[michelebertoli]: https://github.com/MicheleBertoli
 [jest-styled-components]: https://github.com/styled-components/jest-styled-components
 [cxs]: https://www.npmjs.com/package/cxs

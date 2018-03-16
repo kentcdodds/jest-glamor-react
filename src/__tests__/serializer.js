@@ -1,14 +1,14 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import cxs, {sheet} from 'cxs'
+import * as glamor from 'glamor'
 import * as enzyme from 'enzyme'
 import toJson from 'enzyme-to-json'
-import serializer from './serializer'
+import serializer from '../serializer'
 
-expect.addSnapshotSerializer(serializer(sheet))
+expect.addSnapshotSerializer(serializer)
 
 function Wrapper(props) {
-  const className = cxs({
+  const className = glamor.css({
     padding: '4em',
     background: 'papayawhip',
   })
@@ -16,7 +16,7 @@ function Wrapper(props) {
 }
 
 function Title(props) {
-  const className = cxs({
+  const className = glamor.css({
     fontSize: '1.5em',
     textAlign: 'center',
     color: 'palevioletred',
@@ -68,7 +68,32 @@ test(`doesn't mess up stuff that does't have styles`, () => {
   expect(tree).toMatchSnapshot()
 })
 
+test(`doesn't mess up stuff when styles have a child selector`, () => {
+  const style = glamor.css({
+    '> div': {
+      display: 'inline-block',
+    },
+  })
+
+  const tree = renderer
+    .create(
+      <div>
+        <span {...style} />
+      </div>,
+    )
+    .toJSON()
+
+  expect(tree).toMatchSnapshot()
+})
+
 const generalTests = [
+  {
+    title: 'data attributes',
+    styles: {
+      backgroundColor: 'rebeccapurple',
+      margin: 2,
+    },
+  },
   {
     title: 'media queries',
     styles: {
@@ -104,11 +129,19 @@ const generalTests = [
       },
     },
   },
+  {
+    title: 'Child selector',
+    styles: {
+      '> div': {
+        display: 'inline-block',
+      },
+    },
+  },
 ]
 
 generalTests.forEach(({title, styles}, index) => {
   test(title, () => {
-    const tree = renderer.create(<div className={cxs(styles)} />)
+    const tree = renderer.create(<div {...glamor.css(styles)} />)
     expect(tree).toMatchSnapshot(
       `${index + 1}. general tests: ${title} - ${JSON.stringify(styles)}`,
     )

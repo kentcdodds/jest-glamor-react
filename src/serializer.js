@@ -1,22 +1,33 @@
-const {replaceClassNames} = require('./replace-class-names')
-const {getNodes, markNodes, getSelectors, getStyles} = require('./utils')
+const {replaceSelectors} = require('./replace-selectors')
+const {
+  getNodes,
+  markNodes,
+  getSelectors,
+  getStylesAndAllSelectors,
+} = require('./utils')
 
 function createSerializer(styleSheet, classNameReplacer) {
   function test(val) {
-    return val &&
-      !val.withStyles &&
-      val.$$typeof === Symbol.for('react.test.json')
+    return (
+      val &&
+      !val.serializedWithJestGlamorReact &&
+      (val.$$typeof === Symbol.for('react.test.json') ||
+        (val instanceof HTMLElement && !isBeingSerialized(val)))
+    )
   }
 
   function print(val, printer) {
     const nodes = getNodes(val)
     markNodes(nodes)
     const selectors = getSelectors(nodes)
-    const styles = getStyles(selectors, styleSheet)
+    const {styles, allSelectors} = getStylesAndAllSelectors(
+      selectors,
+      styleSheet,
+    )
     const printedVal = printer(val)
     if (styles) {
-      return replaceClassNames(
-        selectors,
+      return replaceSelectors(
+        allSelectors,
         styles,
         printedVal,
         classNameReplacer,
@@ -27,6 +38,18 @@ function createSerializer(styleSheet, classNameReplacer) {
   }
 
   return {test, print}
+}
+
+function isBeingSerialized(node) {
+  let currentNode = node
+
+  while (currentNode) {
+    if (currentNode.serializedWithJestGlamorReact) {
+      return true
+    }
+    currentNode = currentNode.parentNode
+  }
+  return false
 }
 
 // doing this to make it easier for users to mock things
