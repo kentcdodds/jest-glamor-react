@@ -68,6 +68,12 @@ test(`doesn't mess up stuff that does't have styles`, () => {
   expect(tree).toMatchSnapshot()
 })
 
+test('works with strings', () => {
+  const className = glamor.css({margin: 10})
+  const html = `<div class="${className}"></div>`
+  expect(html).toMatchSnapshot()
+})
+
 test(`doesn't mess up stuff when styles have a child selector`, () => {
   const style = glamor.css({
     '> div': {

@@ -199,3 +199,14 @@ exports[`works when the root element does not have styles 1`] = `
   />
 </div>
 `;
+
+exports[`works with strings 1`] = `
+.css-0,
+[data-css-0] {
+  margin: 10px;
+}
+
+<div
+  class="css-0"
+/>
+`;
