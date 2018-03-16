@@ -27,6 +27,12 @@ test(`doesn't mess up stuff that does't have styles`, () => {
   expect(render(<div />)).toMatchSnapshot()
 })
 
+test('can take multiple snapshots', () => {
+  const div = render(<Wrapper />)
+  expect(div).toMatchSnapshot()
+  expect(div).toMatchSnapshot()
+})
+
 test(`doesn't mess up stuff when styles have a child selector`, () => {
   const style = glamor.css({
     '> div': {

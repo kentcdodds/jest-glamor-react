@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot diff works 1`] = `
+
+
+Snapshot Diff:
+- First value
++ Second value
+
+  .css-0,
+  [data-css-0] {
+-   margin: 10px;
++   margin: 11px;
+  }
+  
+- <button class="css-0">0</button>
++ <button class="css-0">1</button>
+`;

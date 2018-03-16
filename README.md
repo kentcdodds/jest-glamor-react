@@ -76,6 +76,7 @@ to React projects that use [`glamor`][glamor].
 * [Usage](#usage)
 * [Custom matchers](#custom-matchers)
   * [toHaveStyleRule(property, value)](#tohavestyleruleproperty-value)
+  * [Integration with snapshot-diff](#integration-with-snapshot-diff)
 * [Inspiration](#inspiration)
 * [Other Solutions](#other-solutions)
 * [Contributors](#contributors)
@@ -280,6 +281,86 @@ test('enzyme', () => {
   expect(wrapper.find(Title)).toHaveStyleRule('color', 'palevioletred')
 })
 ```
+
+### Integration with snapshot-diff
+
+[`snapshot-diff`](https://github.com/jest-community/snapshot-diff) is this
+really neat project that can help you get more value out of your snapshots.
+As far as I know, this is the best example of how to integrate this serializer
+with that handy matcher:
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Simulate} from 'react-dom/test-utils'
+import * as glamor from 'glamor'
+import {toMatchDiffSnapshot, getSnapshotDiffSerializer} from 'snapshot-diff'
+import serializer, {fromHTMLString} from 'jest-glamor-react'
+
+expect.addSnapshotSerializer(getSnapshotDiffSerializer())
+expect.addSnapshotSerializer(serializer)
+expect.extend({toMatchDiffSnapshot})
+
+function Button({count, ...props}) {
+  const className = glamor.css({margin: 10 + count})
+  return <button className={`${className}`} {...props} />
+}
+
+class Counter extends React.Component {
+  state = {count: 0}
+  increment = () => {
+    this.setState(({count}) => ({count: count + 1}))
+  }
+  render() {
+    const {count} = this.state
+    return (
+      <Button onClick={this.increment} count={count}>
+        {count}
+      </Button>
+    )
+  }
+}
+
+test('snapshot diff works', () => {
+  const control = render(<Counter />)
+  const variable = render(<Counter />)
+  Simulate.click(variable)
+  expect(fromHTMLString(control.outerHTML)).toMatchDiffSnapshot(
+    fromHTMLString(variable.outerHTML),
+  )
+})
+
+function render(ui) {
+  const div = document.createElement('div')
+  ReactDOM.render(ui, div)
+  return div.children[0]
+}
+```
+
+The result of this snapshot is:
+
+```diff
+Snapshot Diff:
+- First value
++ Second value
+
+  .css-0,
+  [data-css-0] {
+-   margin: 10px;
++   margin: 11px;
+  }
+
+- <button class="css-0">0</button>
++ <button class="css-0">1</button>
+```
+
+Pretty handy right?!
+
+Notice the `fromHTMLString` function you can import from `jest-glamor-react`.
+That's what `jest-glamor-react` uses internally if you try to snapshot a
+string that looks like HTML and includes `css-` in it. I can't think of any
+other context where it would be useful, so it's not documented beyond this
+example.
 
 ## Inspiration
 

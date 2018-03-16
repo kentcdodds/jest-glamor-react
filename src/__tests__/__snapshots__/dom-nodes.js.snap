@@ -22,6 +22,30 @@ exports[`Child selector: 6. general tests: Child selector - {"> div":{"display":
 />
 `;
 
+exports[`can take multiple snapshots 1`] = `
+.css-0,
+[data-css-0] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<section
+  class="css-0"
+/>
+`;
+
+exports[`can take multiple snapshots 2`] = `
+.css-0,
+[data-css-0] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<section
+  class="css-0"
+/>
+`;
+
 exports[`data attributes: 1. general tests: data attributes - {"backgroundColor":"rebeccapurple","margin":2} 1`] = `
 .css-0,
 [data-css-0] {

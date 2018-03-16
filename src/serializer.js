@@ -1,3 +1,4 @@
+const isHtml = require('is-html')
 const {replaceSelectors} = require('./replace-selectors')
 const {
   getNodes,
@@ -6,17 +7,28 @@ const {
   getStylesAndAllSelectors,
 } = require('./utils')
 
-function createSerializer(styleSheet, classNameReplacer) {
+// doing this to make it easier for users to mock things
+// like switching between development mode and whatnot.
+const getGlamorStyleSheet = () => require('glamor').styleSheet
+
+function createSerializer(styleSheet) {
+  // eslint-disable-next-line complexity
   function test(val) {
+    if (!val) {
+      return false
+    }
     return (
-      val &&
-      !val.serializedWithJestGlamorReact &&
-      (val.$$typeof === Symbol.for('react.test.json') ||
-        (val instanceof HTMLElement && !isBeingSerialized(val)))
+      isHtmlStringWithGlamorClasses(val) ||
+      (!val.serializedWithJestGlamorReact &&
+        (val.$$typeof === Symbol.for('react.test.json') ||
+          (val instanceof HTMLElement && !isBeingSerialized(val))))
     )
   }
 
   function print(val, printer) {
+    if (typeof val === 'string') {
+      return fromHTMLString(val)
+    }
     const nodes = getNodes(val)
     markNodes(nodes)
     const selectors = getSelectors(nodes)
@@ -25,13 +37,10 @@ function createSerializer(styleSheet, classNameReplacer) {
       styleSheet,
     )
     const printedVal = printer(val)
+    // allows us to take multiple snapshots
+    val.serializedWithJestGlamorReact = false
     if (styles) {
-      return replaceSelectors(
-        allSelectors,
-        styles,
-        printedVal,
-        classNameReplacer,
-      )
+      return replaceSelectors(allSelectors, styles, printedVal)
     } else {
       return printedVal
     }
@@ -52,11 +61,23 @@ function isBeingSerialized(node) {
   return false
 }
 
-// doing this to make it easier for users to mock things
-// like switching between development mode and whatnot.
-const getGlamorStyleSheet = () => require('glamor').styleSheet
-const glamorSerializer = createSerializer(getGlamorStyleSheet)
-createSerializer.test = glamorSerializer.test
-createSerializer.print = glamorSerializer.print
+function isHtmlStringWithGlamorClasses(string) {
+  return isHtml(string) && string.includes('css-')
+}
 
-module.exports = createSerializer
+function fromHTMLString(string) {
+  const div = document.createElement('div')
+  div.innerHTML = string
+  const nodes = getNodes(div)
+  const selectors = getSelectors(nodes)
+  const {styles, allSelectors} = getStylesAndAllSelectors(
+    selectors,
+    getGlamorStyleSheet(),
+  )
+  return replaceSelectors(allSelectors, styles, string)
+}
+
+module.exports = Object.assign(createSerializer, {
+  ...createSerializer(getGlamorStyleSheet),
+  fromHTMLString,
+})
