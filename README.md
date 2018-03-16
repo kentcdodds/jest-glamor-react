@@ -295,7 +295,7 @@ import ReactDOM from 'react-dom'
 import {Simulate} from 'react-dom/test-utils'
 import * as glamor from 'glamor'
 import {toMatchDiffSnapshot, getSnapshotDiffSerializer} from 'snapshot-diff'
-import serializer, {fromHTMLString} from 'jest-glamor-react'
+import serializer, {fromDOMNode} from 'jest-glamor-react'
 
 expect.addSnapshotSerializer(getSnapshotDiffSerializer())
 expect.addSnapshotSerializer(serializer)
@@ -325,9 +325,7 @@ test('snapshot diff works', () => {
   const control = render(<Counter />)
   const variable = render(<Counter />)
   Simulate.click(variable)
-  expect(fromHTMLString(control.outerHTML)).toMatchDiffSnapshot(
-    fromHTMLString(variable.outerHTML),
-  )
+  expect(fromDOMNode(control)).toMatchDiffSnapshot(fromDOMNode(variable))
 })
 
 function render(ui) {

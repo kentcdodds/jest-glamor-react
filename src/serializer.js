@@ -1,3 +1,4 @@
+const prettyFormat = require('pretty-format')
 const isHtml = require('is-html')
 const {replaceSelectors} = require('./replace-selectors')
 const {
@@ -62,22 +63,44 @@ function isBeingSerialized(node) {
 }
 
 function isHtmlStringWithGlamorClasses(string) {
-  return isHtml(string) && string.includes('css-')
+  // is-html was letting a "Snapshot Diff:" get through
+  return (
+    typeof string === 'string' &&
+    string.startsWith('<') &&
+    isHtml(string) &&
+    string.includes('css-')
+  )
 }
 
-function fromHTMLString(string) {
-  const div = document.createElement('div')
-  div.innerHTML = string
-  const nodes = getNodes(div)
+function fromDOMNode(div, extract = r => r.children[0]) {
+  const root = document.createElement('div')
+  root.appendChild(div)
+  const nodes = getNodes(root)
   const selectors = getSelectors(nodes)
   const {styles, allSelectors} = getStylesAndAllSelectors(
     selectors,
     getGlamorStyleSheet(),
   )
-  return replaceSelectors(allSelectors, styles, string)
+  return replaceSelectors(
+    allSelectors,
+    styles,
+    prettyFormat(extract(root), {
+      plugins: [
+        prettyFormat.plugins.DOMElement,
+        prettyFormat.plugins.DOMCollection,
+      ],
+    }),
+  )
+}
+
+function fromHTMLString(string) {
+  const div = document.createElement('div')
+  div.innerHTML = string
+  return fromDOMNode(div, root => root.children[0].children[0])
 }
 
 module.exports = Object.assign(createSerializer, {
   ...createSerializer(getGlamorStyleSheet),
   fromHTMLString,
+  fromDOMNode,
 })

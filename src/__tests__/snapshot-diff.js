@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {Simulate} from 'react-dom/test-utils'
 import * as glamor from 'glamor'
 import {toMatchDiffSnapshot, getSnapshotDiffSerializer} from 'snapshot-diff'
-import serializer, {fromHTMLString} from '../serializer'
+import serializer, {fromHTMLString, fromDOMNode} from '../serializer'
 
 expect.addSnapshotSerializer(getSnapshotDiffSerializer())
 expect.addSnapshotSerializer(serializer)
@@ -33,8 +33,10 @@ test('snapshot diff works', () => {
   const control = render(<Counter />)
   const variable = render(<Counter />)
   Simulate.click(variable)
+  // normally I'd probably just use fromDOMNode for both of these
+  // but I'm using fromHTMLString to make sure that it works.
   expect(fromHTMLString(control.outerHTML)).toMatchDiffSnapshot(
-    fromHTMLString(variable.outerHTML),
+    fromDOMNode(variable),
   )
 })
 
