@@ -2,15 +2,15 @@
 
 Thanks for being willing to contribute!
 
-**Working on your first Pull Request?** You can learn how from this *free* series
+**Working on your first Pull Request?** You can learn how from this _free_ series
 [How to Contribute to an Open Source Project on GitHub][egghead]
 
 ## Project setup
 
-1. Fork and clone the repo
-2. `$ npm install` to install dependencies
-3. `$ npm start validate` to validate you've got it working
-4. Create a branch for your PR
+1.  Fork and clone the repo
+2.  `$ npm install` to install dependencies
+3.  `$ npm start validate` to validate you've got it working
+4.  Create a branch for your PR
 
 This project uses [`p-s`][p-s] and you can run `npm start` to see what scripts are available.
 
@@ -36,8 +36,8 @@ You can use `commitizen` to help you to follow [the convention][convention]
 
 Once you are ready to commit the changes, please use the below commands
 
-1. `git add <files to be comitted>`
-2. `$ npm start commit`
+1.  `git add <files to be comitted>`
+2.  `$ npm start commit`
 
 ... and follow the instruction of the interactive prompt.
 
@@ -54,7 +54,7 @@ pre-commit
 
 ## Help needed
 
-Please checkout the [ROADMAP.md][ROADMAP] and raise an issue to discuss
+Please checkout the [ROADMAP.md][roadmap] and raise an issue to discuss
 any of the items in the want to do or might do list.
 
 Also, please watch the repo and respond to questions/bug reports/feature requests! Thanks!
@@ -63,5 +63,5 @@ Also, please watch the repo and respond to questions/bug reports/feature request
 [semantic-release]: https://npmjs.com/package/semantic-release
 [convention]: https://github.com/conventional-changelog/conventional-changelog-angular/blob/ed32559941719a130bb0327f886d6a32a8cbc2ba/convention.md
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[ROADMAP]: ./other/ROADMAP.md
+[roadmap]: ./other/ROADMAP.md
 [p-s]: https://npmjs.com/package/p-s

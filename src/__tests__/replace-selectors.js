@@ -1,4 +1,4 @@
-import {replaceClassNames} from './replace-class-names'
+import {replaceSelectors} from '../replace-selectors'
 
 test('Replaces a single class', () => {
   const selectors = ['.css-12345']
@@ -17,8 +17,8 @@ test('Replaces a single class', () => {
       Hello World, this is my first glamor styled component!
     </h1>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).toMatch(/(glamor-0)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).toMatch(/(css-0)/)
   expect(result).not.toMatch(/(css-12345)/)
 })
 
@@ -50,9 +50,9 @@ test('Replaces multiple glamor classes', () => {
       </h1>
     </section>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).toMatch(/(glamor-0)/)
-  expect(result).toMatch(/(glamor-1)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).toMatch(/(css-0)/)
+  expect(result).toMatch(/(css-1)/)
 })
 
 test('does not replace non-glamor classes', () => {
@@ -70,29 +70,29 @@ test('does not replace non-glamor classes', () => {
       Hello World
     </section>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).not.toMatch(/(glamor-0)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).not.toMatch(/(css-0)/)
   expect(result).toMatch(/(p-4em)/)
 })
 
 test('only replaces classes beginning with "css-"', () => {
-  const selectors = ['.not-glamor-css-1234']
+  const selectors = ['.not-css-css-1234']
   const styles = `
-    .not-glamor-css-1234,
-    [data-not-glamor-css-1234] {
+    .not-css-css-1234,
+    [data-not-css-css-1234] {
       padding: 4em;
     }
   `
   const code = `
     <section
-      className="not-glamor-css-1234"
+      className="not-css-css-1234"
     >
       Hello World
     </section>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).not.toMatch(/(glamor-0)/)
-  expect(result).toMatch(/(not-glamor-css-1234)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).not.toMatch(/(css-0)/)
+  expect(result).toMatch(/(not-css-css-1234)/)
 })
 
 test('replaces css-nil classes', () => {
@@ -105,8 +105,8 @@ test('replaces css-nil classes', () => {
       Hello World, this is my first glamor styled component!
     </h1>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).toMatch(/(glamor-0)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).toMatch(/(css-0)/)
   expect(result).not.toMatch(/(css-nil)/)
 })
 
@@ -127,13 +127,13 @@ test('replaces css-label- classes', () => {
       Hello World, this is my first glamor styled component!
     </h1>
   `
-  const result = replaceClassNames(selectors, styles, code)
-  expect(result).toMatch(/(glamor-0)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).toMatch(/(css-0)/)
   expect(result).not.toMatch(/(css-label-12345)/)
 })
 
-test('replaces with custom class name replacer', () => {
-  const selectors = ['.css-12345', '.css-67890']
+test('replaces data attributes', () => {
+  const selectors = ['[data-css-12345]', '.css-12345']
   const styles = `
     .css-12345,
     [data-css-12345] {
@@ -141,31 +141,17 @@ test('replaces with custom class name replacer', () => {
       text-align: center;
       color: palevioletred;
     }
-
-    .css-67890,
-    [data-css-67890] {
-      font-size: 1.5em;
-      text-align: center;
-      color: palevioletred;
-    }
   `
   const code = `
-    <section
-      className="some-other-class css-12345"
+    <h1
+      data-css-12345=""
     >
-      <h1
-        className="changed-class css-67890"
-      >
-        Hello World, this is my first glamor styled component!
-      </h1>
-    </section>
+      Hello World, this is my first glamor styled component!
+    </h1>
   `
-  const result = replaceClassNames(
-    selectors,
-    styles,
-    code,
-    (className, index) => `custom-${index}-${className.replace('.', '')}`,
-  )
-  expect(result).toMatch(/(custom-0-css-12345)/)
-  expect(result).toMatch(/(custom-1-css-67890)/)
+  const result = replaceSelectors(selectors, styles, code)
+  expect(result).toMatch(/(data-css-0)/)
+  expect(result).toMatch(/(css-0)/)
+  expect(result).not.toMatch(/(css-12345)/)
+  expect(result).not.toMatch(/(data-css-12345)/)
 })

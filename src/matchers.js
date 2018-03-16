@@ -1,11 +1,12 @@
+const chalk = require('chalk')
 const {getAST, getClassNames} = require('./utils')
 
 const getGlamorStyleSheet = () => require('glamor').styleSheet
 
 function valueMatches(declaration, value) {
-  return value instanceof RegExp ?
-    value.test(declaration.value) :
-    value === declaration.value
+  return value instanceof RegExp
+    ? value.test(declaration.value)
+    : value === declaration.value
 }
 
 function toHaveStyleRule(received, property, value) {
@@ -14,7 +15,8 @@ function toHaveStyleRule(received, property, value) {
 
   const classNames = getClassNames(received)
   const rules = ast.stylesheet.rules.filter(rule =>
-    classNames.some(cn => rule.selectors.includes(`.${cn}`)))
+    classNames.some(cn => rule.selectors.includes(`.${cn}`)),
+  )
 
   const declaration = rules
     .reduce((decs, rule) => Object.assign([], decs, rule.declarations), [])
@@ -32,9 +34,9 @@ function toHaveStyleRule(received, property, value) {
 
   const message = () =>
     `Expected ${property}${pass ? ' not ' : ' '}to match:\n` +
-    `  ${value}\n` +
+    `  ${chalk.green(value)}\n` +
     'Received:\n' +
-    `  ${declaration.value}`
+    `  ${chalk.red(declaration.value)}`
 
   return {
     pass,

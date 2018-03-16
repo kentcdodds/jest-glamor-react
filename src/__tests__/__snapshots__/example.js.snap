@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react-dom snapshot 1`] = `
+.css-0,
+[data-css-0] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.css-1,
+[data-css-1] {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<section
+  class="css-0"
+>
+  <h1
+    class="css-1"
+  >
+    Hello World, this is my first glamor styled component!
+  </h1>
+</section>
+`;

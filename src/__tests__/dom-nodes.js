@@ -1,9 +1,7 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
+import ReactDOM from 'react-dom'
 import * as glamor from 'glamor'
-import * as enzyme from 'enzyme'
-import toJson from 'enzyme-to-json'
-import serializer from './serializer'
+import serializer from '../serializer'
 
 expect.addSnapshotSerializer(serializer)
 
@@ -15,57 +13,18 @@ function Wrapper(props) {
   return <section className={`${className}`} {...props} />
 }
 
-function Title(props) {
-  const className = glamor.css({
-    fontSize: '1.5em',
-    textAlign: 'center',
-    color: 'palevioletred',
-  })
-  return <h1 className={`${className}`} {...props} />
-}
-
-test('react-test-renderer', () => {
-  const tree = renderer
-    .create(
-      <Wrapper>
-        <Title>Hello World, this is my first glamor styled component!</Title>
-      </Wrapper>,
-    )
-    .toJSON()
-
-  expect(tree).toMatchSnapshot()
-})
-
-test('enzyme', () => {
-  const ui = (
-    <Wrapper>
-      <Title>Hello World, this is my first glamor styled component!</Title>
-    </Wrapper>
+test('works when the root element does not have styles', () => {
+  const div = render(
+    <div>
+      <Wrapper />
+    </div>,
   )
 
-  const enzymeMethods = ['shallow', 'mount', 'render']
-  enzymeMethods.forEach(method => {
-    const tree = enzyme[method](ui)
-    expect(toJson(tree)).toMatchSnapshot(`enzyme.${method}`)
-  })
-})
-
-test('works when the root element does not have styles', () => {
-  const tree = renderer
-    .create(
-      <div>
-        <Wrapper />
-      </div>,
-    )
-    .toJSON()
-
-  expect(tree).toMatchSnapshot()
+  expect(div).toMatchSnapshot()
 })
 
 test(`doesn't mess up stuff that does't have styles`, () => {
-  const tree = renderer.create(<div />).toJSON()
-
-  expect(tree).toMatchSnapshot()
+  expect(render(<div />)).toMatchSnapshot()
 })
 
 test(`doesn't mess up stuff when styles have a child selector`, () => {
@@ -75,9 +34,13 @@ test(`doesn't mess up stuff when styles have a child selector`, () => {
     },
   })
 
-  const tree = renderer.create(<div><span {...style} /></div>).toJSON()
+  const div = render(
+    <div>
+      <span {...style} />
+    </div>,
+  )
 
-  expect(tree).toMatchSnapshot()
+  expect(div).toMatchSnapshot()
 })
 
 const generalTests = [
@@ -116,14 +79,6 @@ const generalTests = [
     },
   },
   {
-    title: 'supports queries',
-    styles: {
-      '@supports (display: grid)': {
-        display: 'grid',
-      },
-    },
-  },
-  {
     title: 'Appended class',
     styles: {
       '&.button': {
@@ -143,9 +98,15 @@ const generalTests = [
 
 generalTests.forEach(({title, styles}, index) => {
   test(title, () => {
-    const tree = renderer.create(<div {...glamor.css(styles)} />)
-    expect(tree).toMatchSnapshot(
+    const div = render(<div {...glamor.css(styles)} />)
+    expect(div).toMatchSnapshot(
       `${index + 1}. general tests: ${title} - ${JSON.stringify(styles)}`,
     )
   })
 })
+
+function render(ui) {
+  const div = document.createElement('div')
+  ReactDOM.render(ui, div)
+  return div.children[0]
+}

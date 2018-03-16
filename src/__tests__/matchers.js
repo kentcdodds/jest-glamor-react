@@ -1,9 +1,10 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
 import * as glamor from 'glamor'
 import * as enzyme from 'enzyme'
-import {toHaveStyleRule} from './matchers'
-import serializer from './serializer'
+import {toHaveStyleRule} from '../matchers'
+import serializer from '../serializer'
 
 expect.addSnapshotSerializer(serializer)
 expect.extend({toHaveStyleRule})
@@ -55,12 +56,27 @@ test('enzyme', () => {
     expect(wrapper).toHaveStyleRule('background', 'papayawhip')
     expect(wrapper).not.toHaveStyleRule('color', 'palevioletred')
 
-    const title = method === 'render' ?
-      wrapper.find('h1') :
-      wrapper.find(Title)
+    const title = method === 'render' ? wrapper.find('h1') : wrapper.find(Title)
     expect(title).not.toHaveStyleRule('background', 'papayawhip')
     expect(title).toHaveStyleRule('color', 'palevioletred')
   })
+})
+
+test('dom nodes', () => {
+  const div = document.createElement('div')
+  ReactDOM.render(
+    <Wrapper>
+      <Title>Hello World, this is my first glamor styled component!</Title>
+    </Wrapper>,
+    div,
+  )
+  const wrapper = div.children[0]
+  expect(wrapper).toHaveStyleRule('background', 'papayawhip')
+  expect(wrapper).not.toHaveStyleRule('color', 'palevioletred')
+
+  const title = wrapper.children[0]
+  expect(title).not.toHaveStyleRule('background', 'papayawhip')
+  expect(title).toHaveStyleRule('color', 'palevioletred')
 })
 
 describe('toHaveStyleRule', () => {
@@ -84,11 +100,7 @@ describe('toHaveStyleRule', () => {
   it('can recieve string or regex values', () => {
     const wrapper = renderer.create(<Wrapper />).toJSON()
 
-    expect(toHaveStyleRule(wrapper, 'background', /papayawhip/).pass).toBe(
-      true,
-    )
-    expect(toHaveStyleRule(wrapper, 'background', 'papayawhip').pass).toBe(
-      true,
-    )
+    expect(toHaveStyleRule(wrapper, 'background', /papayawhip/).pass).toBe(true)
+    expect(toHaveStyleRule(wrapper, 'background', 'papayawhip').pass).toBe(true)
   })
 })

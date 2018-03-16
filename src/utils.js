@@ -2,9 +2,8 @@ const css = require('css')
 
 function getNodes(node, nodes = []) {
   if (node.children) {
-    const children = typeof node.children === 'function' ?
-      node.children() :
-      node.children
+    const children =
+      typeof node.children === 'function' ? node.children() : node.children
     if (Array.isArray(children)) {
       children.forEach(child => getNodes(child, nodes))
     }
@@ -19,41 +18,58 @@ function getNodes(node, nodes = []) {
 
 function markNodes(nodes) {
   nodes.forEach(node => {
-    node.withStyles = true
+    node.serializedWithJestGlamorReact = true
   })
 }
 
 function getSelectors(nodes) {
-  return nodes.reduce(
-    (selectors, node) => {
-      const props = typeof node.props === 'function' ?
-        node.props() :
-        node.props
-      return getSelectorsFromProps(selectors, props)
-    },
-    [],
-  )
+  return nodes.reduce((selectors, node) => {
+    if (node instanceof global.HTMLElement) {
+      return getSelectorsFromDOM(selectors, node)
+    } else {
+      return getSelectorsFromProps(selectors, node)
+    }
+  }, [])
 }
 
-function getSelectorsFromProps(selectors, props) {
+// eslint-disable-next-line
+function getSelectorsFromProps(selectors, node) {
+  const props = typeof node.props === 'function' ? node.props() : node.props
   const className = props.className || props.class
   if (className) {
     selectors = selectors.concat(
-      className.toString().split(' ').map(cn => `.${cn}`),
+      className
+        .toString()
+        .split(' ')
+        .map(cn => `.${cn}`),
     )
   }
-  const dataProps = Object.keys(props).reduce(
-    (dProps, key) => {
-      if (key.startsWith('data-')) {
-        dProps.push(`[${key}]`)
-      }
-      return dProps
-    },
-    [],
-  )
+  const dataProps = Object.keys(props).reduce((dProps, key) => {
+    if (key.startsWith('data-')) {
+      dProps.push(`[${key}]`)
+    }
+    return dProps
+  }, [])
   if (dataProps.length) {
     selectors = selectors.concat(dataProps)
   }
+  return selectors
+}
+
+function getSelectorsFromDOM(selectors, node) {
+  const root = document.createElement('div')
+  root.appendChild(node)
+  const allChildren = root.querySelectorAll('*')
+  selectors = Array.from(allChildren).reduce((s, c) => {
+    s.push(...Array.from(c.classList).map(cn => `.${cn}`))
+    s.push(
+      ...c
+        .getAttributeNames()
+        .filter(key => key.startsWith('data-'))
+        .map(key => `[${key}]`),
+    )
+    return s
+  }, selectors)
   return selectors
 }
 
@@ -65,9 +81,8 @@ function filterChildSelector(baseSelector) {
 }
 
 function getAST(nodeSelectors, styleSheet) {
-  const tags = typeof styleSheet === 'function' ?
-    styleSheet().tags :
-    styleSheet.tags
+  const tags =
+    typeof styleSheet === 'function' ? styleSheet().tags : styleSheet.tags
   const styles = tags
     .map(tag => /* istanbul ignore next */ tag.textContent || '')
     .join('\n')
@@ -94,27 +109,30 @@ function getAST(nodeSelectors, styleSheet) {
   }
 }
 
-function getStyles(nodeSelectors, styleSheet) {
+function getStylesAndAllSelectors(nodeSelectors, styleSheet) {
   const ast = getAST(nodeSelectors, styleSheet)
-  const ret = css.stringify(ast)
-  return ret
+  const allSelectors = ast.stylesheet.rules.reduce((s, r) => {
+    if (r.selectors) {
+      s.push(...r.selectors)
+    }
+    return s
+  }, [])
+  const styles = css.stringify(ast)
+  return {styles, allSelectors}
 }
 
 function getMediaQueries(ast, filter) {
   return ast.stylesheet.rules
     .filter(rule => rule.type === 'media' || rule.type === 'supports')
-    .reduce(
-      (acc, mediaQuery) => {
-        mediaQuery.rules = mediaQuery.rules.filter(filter)
+    .reduce((acc, mediaQuery) => {
+      mediaQuery.rules = mediaQuery.rules.filter(filter)
 
-        if (mediaQuery.rules.length) {
-          return acc.concat(mediaQuery)
-        }
+      if (mediaQuery.rules.length) {
+        return acc.concat(mediaQuery)
+      }
 
-        return acc
-      },
-      [],
-    )
+      return acc
+    }, [])
 }
 
 function shouldDive(node) {
@@ -136,8 +154,14 @@ function getClassNameFromTestRenderer(received) {
 }
 
 function getClassNameFromCheerio(received) {
+  /* istanbul ignore next */
   if (received[0].type === 'root') {
-    return received.children().first().attr('class')
+    // I'm honestly not sure we need this, but it was here
+    // and I don't want to break it...
+    return received
+      .children()
+      .first()
+      .attr('class')
   } else {
     return received.attr('class')
   }
@@ -148,7 +172,9 @@ function getClassNames(received) {
   let className
 
   if (received) {
-    if (received.$$typeof === Symbol.for('react.test.json')) {
+    if (received instanceof HTMLElement) {
+      className = received.className
+    } else if (received.$$typeof === Symbol.for('react.test.json')) {
       className = getClassNameFromTestRenderer(received)
     } else if (typeof received.findWhere === 'function') {
       className = getClassNameFromEnzyme(received)
@@ -165,6 +191,6 @@ module.exports = {
   markNodes,
   getSelectors,
   getAST,
-  getStyles,
+  getStylesAndAllSelectors,
   getClassNames,
 }

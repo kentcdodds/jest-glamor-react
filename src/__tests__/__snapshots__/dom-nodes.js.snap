@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Appended class: 5. general tests: Appended class - {"&.button":{"color":"green"}} 1`] = `
+.css-0,
+[data-css-1].button {
+  color: green;
+}
+
+<div
+  data-css-1=""
+/>
+`;
+
+exports[`Child selector: 6. general tests: Child selector - {"> div":{"display":"inline-block"}} 1`] = `
+.css-0> div,
+[data-css-0]> div {
+  display: inline-block;
+}
+
+<div
+  data-css-0=""
+/>
+`;
+
+exports[`data attributes: 1. general tests: data attributes - {"backgroundColor":"rebeccapurple","margin":2} 1`] = `
+.css-0,
+[data-css-0] {
+  background-color: rebeccapurple;
+  margin: 2px;
+}
+
+<div
+  data-css-0=""
+/>
+`;
+
+exports[`doesn't mess up stuff that does't have styles 1`] = `<div />`;
+
+exports[`doesn't mess up stuff when styles have a child selector 1`] = `
+.css-0> div,
+[data-css-0]> div {
+  display: inline-block;
+}
+
+<div>
+  <span
+    data-css-0=""
+  />
+</div>
+`;
+
+exports[`media queries: 2. general tests: media queries - {"fontSize":24,"margin":12,"@media (max-width: 641px)":{"fontSize":20,"margin":10}} 1`] = `
+.css-0,
+[data-css-0] {
+  font-size: 24px;
+  margin: 12px;
+}
+
+@media (max-width: 641px) {
+  .css-0,
+  [data-css-0] {
+    font-size: 20px;
+    margin: 10px;
+  }
+}
+
+<div
+  data-css-0=""
+/>
+`;
+
+exports[`pseudo elements: 3. general tests: pseudo elements - {"& button":{"color":"green"}} 1`] = `
+.css-0 button,
+[data-css-0] button {
+  color: green;
+}
+
+<div
+  data-css-0=""
+/>
+`;
+
+exports[`pseudo states: 4. general tests: pseudo states - {":hover":{"backgroundColor":"blue"}} 1`] = `
+.css-0,
+[data-css-1]:hover {
+  background-color: blue;
+}
+
+<div
+  data-css-1=""
+/>
+`;
+
+exports[`works when the root element does not have styles 1`] = `
+.css-0,
+[data-css-0] {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<div>
+  <section
+    class="css-0"
+  />
+</div>
+`;
