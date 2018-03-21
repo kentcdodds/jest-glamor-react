@@ -74,7 +74,8 @@ function isHtmlStringWithGlamorClasses(string) {
 
 function fromDOMNode(div, extract = r => r.children[0]) {
   const root = document.createElement('div')
-  root.appendChild(div)
+  // not appending because we don't want to mess up the div they give us
+  root.innerHTML = div.outerHTML
   const nodes = getNodes(root)
   const selectors = getSelectors(nodes)
   const {styles, allSelectors} = getStylesAndAllSelectors(
