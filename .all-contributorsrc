@@ -98,6 +98,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Ailrun",
+      "name": "Junyoung Clare Jang",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12473268?v=4",
+      "profile": "http://ailrun.github.io/",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
