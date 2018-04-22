@@ -37,10 +37,12 @@ test('react-test-renderer', () => {
 
   expect(wrapper).toHaveStyleRule('background', 'papayawhip')
   expect(wrapper).not.toHaveStyleRule('color', 'palevioletred')
+  expect(wrapper).toHaveStyleRule('padding', expect.anything())
 
   const title = wrapper.children[0]
   expect(title).not.toHaveStyleRule('background', 'papayawhip')
   expect(title).toHaveStyleRule('color', 'palevioletred')
+  expect(title).toHaveStyleRule('text-align', expect.stringMatching(/cen.*$/))
 })
 
 test('enzyme', () => {
@@ -55,10 +57,12 @@ test('enzyme', () => {
     const wrapper = enzyme[method](ui)
     expect(wrapper).toHaveStyleRule('background', 'papayawhip')
     expect(wrapper).not.toHaveStyleRule('color', 'palevioletred')
+    expect(wrapper).toHaveStyleRule('padding', expect.anything())
 
     const title = method === 'render' ? wrapper.find('h1') : wrapper.find(Title)
     expect(title).not.toHaveStyleRule('background', 'papayawhip')
     expect(title).toHaveStyleRule('color', 'palevioletred')
+    expect(title).toHaveStyleRule('text-align', expect.stringMatching(/cen.*$/))
   })
 })
 
@@ -97,10 +101,17 @@ describe('toHaveStyleRule', () => {
     ).toContain('Expected background not to match:')
   })
 
-  it('can recieve string or regex values', () => {
+  it('can recieve string, regex values, or asymmetricMatchers (like expect.anything())', () => {
     const wrapper = renderer.create(<Wrapper />).toJSON()
 
     expect(toHaveStyleRule(wrapper, 'background', /papayawhip/).pass).toBe(true)
     expect(toHaveStyleRule(wrapper, 'background', 'papayawhip').pass).toBe(true)
+    expect(toHaveStyleRule(wrapper, 'background', expect.anything()).pass).toBe(
+      true,
+    )
+    expect(
+      toHaveStyleRule(wrapper, 'background', expect.stringContaining('paya'))
+        .pass,
+    ).toBe(true)
   })
 })
