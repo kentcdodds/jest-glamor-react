@@ -1,6 +1,7 @@
 {
   "projectName": "jest-glamor-react",
   "projectOwner": "kentcdodds",
+  "repoType": "github",
   "files": [
     "README.md"
   ],
@@ -97,6 +98,16 @@
       "profile": "https://github.com/brentertz",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "Ailrun",
+      "name": "Junyoung Clare Jang",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12473268?v=4",
+      "profile": "http://ailrun.github.io/",
+      "contributions": [
+        "code",
+        "test"
       ]
     }
   ]
