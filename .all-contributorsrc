@@ -1,6 +1,7 @@
 {
   "projectName": "jest-glamor-react",
   "projectOwner": "kentcdodds",
+  "repoType": "github",
   "files": [
     "README.md"
   ],
@@ -109,6 +110,5 @@
         "test"
       ]
     }
-  ],
-  "repoType": "github"
+  ]
 }
