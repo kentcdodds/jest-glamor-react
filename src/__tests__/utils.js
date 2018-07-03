@@ -78,4 +78,11 @@ describe('getSelectors', () => {
     )
     expect(getSelectors(wrapper)).toHaveLength(1)
   })
+  it('works when a node has no props (edge case)', () => {
+    const wrapper = renderer.create(<div />).toJSON()
+    const nodes = getNodes(wrapper)
+    // Simulate a node with no props.
+    delete nodes[0].props
+    expect(getSelectors(nodes)).toHaveLength(0)
+  })
 })
