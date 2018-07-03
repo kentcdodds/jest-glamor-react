@@ -35,6 +35,7 @@ function getSelectors(nodes) {
 // eslint-disable-next-line
 function getSelectorsFromProps(selectors, node) {
   const props = typeof node.props === 'function' ? node.props() : node.props
+  if (!props) return []
   const className = props.className || props.class
   if (className) {
     selectors = selectors.concat(
